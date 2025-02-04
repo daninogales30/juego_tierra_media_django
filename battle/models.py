@@ -24,3 +24,4 @@ class Battle(models.Model):
 
     def __str__(self):
         return f"Batalla entre {self.character1.name} y {self.character2.name}, y el ganador es... {self.winner if self.winner else 'Pendiente'}"
+
