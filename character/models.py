@@ -30,8 +30,8 @@ class Character(models.Model):
         return f"{self.name}"
 
 class Relacion(models.Model):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    related_to = models.ForeignKey(Character, on_delete=models.CASCADE)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='personaje1')
+    related_to = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='personaje2')
     tipo = models.CharField(max_length=50, choices=[('amigo', 'Amigo'), ('enemigo', 'Enemigo'), ('neutral', 'Neutral')])
     confidence_level = models.IntegerField(default=0)
 
