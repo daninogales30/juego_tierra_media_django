@@ -6,7 +6,7 @@ class Character(models.Model):
     race = models.CharField(max_length=50, choices=[('elfo', 'Elfo'), ('humana', 'Humana'), ('Enano', 'Enano'), ('Hobbit', 'Hobbit')])
     faction = models.CharField(max_length=100)
     ubication = models.CharField(max_length=100)
-    equipment = models.ManyToManyField(Equipment, blank=True)
+    equipment = models.ManyToManyField(Equipment, blank=True, related_name='equipamiento')
     arma_equipada = models.ForeignKey(Weapon, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada')
 
     def add_equipment(self, new_equipment):
