@@ -3,9 +3,9 @@ from django.db import models
 from character.models import Character
 
 class Battle(models.Model):
-    character1 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character1')
-    character2 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character2')
-    winner = models.ForeignKey(Character,null=True, blank=True, on_delete=models.CASCADE)
+    character1 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character1' )
+    character2 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character2' )
+    winner = models.ForeignKey(Character,null=True, blank=True, on_delete=models.CASCADE, related_name='ganador_batalla' )
     date = models.DateTimeField()
 
     def simulate(self):
