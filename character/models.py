@@ -7,7 +7,7 @@ class Character(models.Model):
     faction = models.CharField(max_length=100)
     ubication = models.CharField(max_length=100)
     equipment = models.ManyToManyField(Equipment, blank=True)
-    arma_equipada = models.ForeignKey(Weapon, null=True, blank=True, on_delete=models.SET_NULL)
+    arma_equipada = models.ForeignKey(Weapon, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada')
 
     def add_equipment(self, new_equipment):
         self.equipment.add(new_equipment)
