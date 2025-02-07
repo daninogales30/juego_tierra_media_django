@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'battle.apps.BattleConfig',
+    'character.apps.CharacterConfig',
+    'equipment.apps.EquipmentConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'battle.apps.BattleConfig',
-    'character.apps.CharacterConfig',
-    'equipment.apps.EquipmentConfig',
 ]
 
 MIDDLEWARE = [
