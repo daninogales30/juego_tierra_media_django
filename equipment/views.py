@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
+
+from character.models import Character
 from .models import Equipment
 
 TIPO_CHOICES = [
@@ -10,7 +12,7 @@ TIPO_CHOICES = [
 ]
 
 class EquipmentForm(forms.ModelForm):
-    character = forms.ModelChoiceField(required=False, label="Asignar a personaje")
+    character = forms.ModelChoiceField(required=False,queryset=Character.objects.all(),label="Asignar a personaje")
     tipo = forms.ChoiceField(choices=TIPO_CHOICES, widget=forms.Select(), label="Tipo de equipo")
 
     class Meta:
