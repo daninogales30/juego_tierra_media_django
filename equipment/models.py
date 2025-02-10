@@ -7,7 +7,7 @@ class Equipment(models.Model):
     potencia = models.IntegerField()
 
     def es_arma(self):
-        return self.tipo.lower() == 'armor'
+        return self.tipo.lower() == 'weapon'
 
     def __str__(self):
         return f"{self.name}"
