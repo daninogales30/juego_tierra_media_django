@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
+
+from character.models import Character
 from .models import Equipment
 
 TIPO_CHOICES = [
@@ -10,7 +12,7 @@ TIPO_CHOICES = [
 ]
 
 class EquipmentForm(forms.ModelForm):
-    character = forms.ModelChoiceField(required=False, label="Asignar a personaje")
+    character = forms.ModelChoiceField(required=False,queryset=Character.objects.all(),label="Asignar a personaje")
     tipo = forms.ChoiceField(choices=TIPO_CHOICES, widget=forms.Select(), label="Tipo de equipo")
 
     class Meta:
@@ -35,9 +37,9 @@ def equipment_view(request):
             return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
     else:
         form = EquipmentForm()
-    return render(request, "form_equipment.html", {"form": form})
+    return render(request, {"form": form})
 
 def equipment_list_view(request):
     equipments = Equipment.objects.all()
-    return render(request, "equipment_list.html", {"equipments": equipments})
+    return render(request, {"equipments": equipments})
 
