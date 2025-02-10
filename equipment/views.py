@@ -35,9 +35,9 @@ def equipment_view(request):
             return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
     else:
         form = EquipmentForm()
-    return render(request, "form_equipment.html", {"form": form})
+    return render(request, {"form": form})
 
 def equipment_list_view(request):
     equipments = Equipment.objects.all()
-    return render(request, "equipment_list.html", {"equipments": equipments})
+    return render(request, {"equipments": equipments})
 
