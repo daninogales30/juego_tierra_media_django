@@ -17,23 +17,23 @@ class CreateCharacterView(CreateView):
     model = Character
     form_class = CharacterForm
     template_name = "character_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
 
 class DeleteCharacterView(DeleteView):
     model = Character
     template_name = "character_delete.html"
 
     def get_success_url(self):
-        return redirect("character_list")
+        return redirect("character:character_list")
 
 def delete_character(request, pk):
     character = get_object_or_404(Character, pk=pk)
 
     if request.method == "POST":
         character.delete()
-        return redirect("character_list")
+        return redirect("character:character_list")
 
-    return redirect("character_list")
+    return redirect("character:character_list")
 class DetailCharacterView(DetailView):
     model = Character
     template_name = "character_detail.html"
@@ -43,7 +43,7 @@ class EquipWeaponView(UpdateView):
     model = Character
     fields = ["arma_equipada"]
     template_name = "character_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
 
     def form_valid(self, form):
         character = form.instance
@@ -58,7 +58,7 @@ class ChangeUbicationView(UpdateView):
     model = Character
     fields = ["ubication"]
     template_name = "character_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
 
     def form_valid(self, form):
         new_ubication = form.cleaned_data["ubication"]
@@ -77,7 +77,7 @@ class RelacionCreateView(CreateView):
     model = Relacion
     form_class = RelacionForm
     template_name = "relacion_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
 
 class CharacterListView(ListView):
     model = Character
