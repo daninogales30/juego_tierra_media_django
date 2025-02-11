@@ -1,6 +1,7 @@
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView, DeleteView
 
 from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
@@ -17,6 +18,26 @@ class CreateCharacterView(CreateView):
     form_class = CharacterForm
     template_name = "character_form.html"
     success_url = reverse_lazy("character_list")
+
+class DeleteCharacterView(DeleteView):
+    model = Character
+    template_name = "character_delete.html"
+
+    def get_success_url(self):
+        return redirect("character_list")
+
+def delete_character(request, pk):
+    character = get_object_or_404(Character, pk=pk)
+
+    if request.method == "POST":
+        character.delete()
+        return redirect("character_list")
+
+    return redirect("character_list")
+class DetailCharacterView(DetailView):
+    model = Character
+    template_name = "character_detail.html"
+    context_object_name = "character"
 
 class EquipWeaponView(UpdateView):
     model = Character
@@ -51,13 +72,14 @@ class ChangeUbicationView(UpdateView):
 
         return super().form_valid(form)
 
-class CharacterListView(ListView):
-    model = Character
-    template_name = "character_list.html"
-    context_object_name = "characters"
 
 class RelacionCreateView(CreateView):
     model = Relacion
     form_class = RelacionForm
     template_name = "relacion_form.html"
     success_url = reverse_lazy("character_list")
+
+class CharacterListView(ListView):
+    model = Character
+    template_name = "character_list.html"
+    context_object_name = "characters"
