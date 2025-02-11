@@ -33,13 +33,14 @@
         </tr>
     {% empty %}
         <tr>
-            <td colspan="6">No hay personajes disponibles.</td>
+            <td colspan="6">No hay personajes disponibles. <a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a></td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
-<a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a>
-<a href="{% url 'character:relacion_create' %}">Crear relación entre 2 personajes</a>
+{% if characters %}
+    <a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a> |
+    <a href="{% url 'character:relacion_create' %}">Crear relación entre 2 personajes</a>
+{% endif %}
 </body>
 </html>
