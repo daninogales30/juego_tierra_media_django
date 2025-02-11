@@ -22,18 +22,17 @@ class CreateCharacterView(CreateView):
 class DeleteCharacterView(DeleteView):
     model = Character
     template_name = "character_delete.html"
-
-    def get_success_url(self):
-        return redirect("character:character_list")
+    success_url = reverse_lazy("character:character_list")
 
 def delete_character(request, pk):
     character = get_object_or_404(Character, pk=pk)
 
     if request.method == "POST":
         character.delete()
-        return redirect("character:character_list")
+        return redirect(reverse_lazy("character:character_list"))
 
-    return redirect("character:character_list")
+    return redirect(reverse_lazy("character:character_list"))
+
 class DetailCharacterView(DetailView):
     model = Character
     template_name = "character_detail.html"
