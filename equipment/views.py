@@ -32,9 +32,9 @@ def equipment_view(request):
             equipment = form.save()
             character = form.cleaned_data.get('character', None)
             print(f"Personaje: {character}, Arma tipo: {equipment.tipo}, Potencia: {equipment.potencia}, añadidos")
-            return HttpResponse("¡Equipo guardado exitosamente!")
+            return HttpResponse("Equipo guardado con exito!")
         else:
-            return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
+            return HttpResponse("Error en el formulario.Revise el equipamiento.")
     else:
         form = EquipmentForm()
     return render(request, {"form": form})
