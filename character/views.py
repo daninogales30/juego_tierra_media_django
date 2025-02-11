@@ -21,7 +21,7 @@ class CreateCharacterView(CreateView):
 class EquipWeaponView(UpdateView):
     model = Character
     fields = ["arma_equipada"]
-    template_name = "equip_weapon.html"
+    template_name = "character_form.html"
     success_url = reverse_lazy("character_list")
 
     def form_valid(self, form):
@@ -36,7 +36,7 @@ class EquipWeaponView(UpdateView):
 class ChangeUbicationView(UpdateView):
     model = Character
     fields = ["ubication"]
-    template_name = "change_ubication.html"
+    template_name = "character_form.html"
     success_url = reverse_lazy("character_list")
 
     def form_valid(self, form):
