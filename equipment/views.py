@@ -1,10 +1,11 @@
-
+from django.views.generic import  ListView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
-
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
+from equipment.models import Equipment
 from character.models import Character
-from .models import Equipment
 
 TIPO_CHOICES = [
     ('weapon', 'Weapon'),
@@ -12,7 +13,7 @@ TIPO_CHOICES = [
 ]
 
 class EquipmentForm(forms.ModelForm):
-    character = forms.ModelChoiceField(required=False,queryset=Character.objects.all(),label="Asignar a personaje")
+    character = forms.ModelChoiceField(required=False, queryset=Character.objects.none(), label="Asignar a personaje")
     tipo = forms.ChoiceField(choices=TIPO_CHOICES, widget=forms.Select(), label="Tipo de equipo")
 
     class Meta:
@@ -31,15 +32,33 @@ def equipment_view(request):
         if form.is_valid():
             equipment = form.save()
             character = form.cleaned_data.get('character', None)
-            print(f"Personaje: {character}, Arma tipo: {equipment.tipo}, Potencia: {equipment.potencia}, añadidos")
-            return HttpResponse("Equipo guardado con exito!")
+
+            if character:
+                print(
+                    f"Personaje: {character}, Tipo de equipo: {equipment.tipo}, Potencia: {equipment.potencia} añadidos")
+
+            return redirect('equipment_list')
         else:
-            return HttpResponse("Error en el formulario.Revise el equipamiento.")
+            return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
     else:
         form = EquipmentForm()
-    return render(request, {"form": form})
+    return render(request, "equipment_form.html", {"form": form})
+
+
+class EquipmentListView(ListView):
+    model = Equipment
+    template_name = "equipment_list.html"
+    context_object_name = "equipments"
+
+
+class DeleteEquipmentView(DeleteView):
+    model = Equipment
+    template_name = "equipment_confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse('equipment_list')
+
 
 def equipment_list_view(request):
     equipments = Equipment.objects.all()
-    return render(request, {"equipments": equipments})
-
+    return render(request, "equipment_list.html", {"equipments": equipments})
