@@ -27,7 +27,8 @@
             <td>
                 <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a> |
                 <a href="{% url 'character:equip_weapon' character.id %}">Equipar Arma</a> |
-                <a href="{% url 'character:principal_menu' character.id %}">Ver Detalles</a> |
+                <a href="{% url 'character:detail_character' character.id %}">Ver Detalles</a> |
+                <a href="{% url 'character:delete_character' character.id %}">Eliminar personaje</a>
             </td>
         </tr>
     {% empty %}
