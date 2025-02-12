@@ -1,41 +1,52 @@
-@font-face {
-  font-family: 'Fuente Juego';
-  src: url('../fonts/Bruce Forever.ttf');
-    font-style: normal;
-  font-weight: normal;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+
 body{
-    font-family: "Fuente Juego", serif;
+    font-family: 'MiFuente', sans-serif;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0;
-    margin: 0;
     background-image: url("https://wallpapers.com/images/hd/lord-of-the-rings-wallpaper-for-ipad-1920x1080-hd-for-ipad-apps-s4husiz6bz8aavpz.jpg");
 }
 
+div{
+    display: flex;
+    margin-top: 120px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: #3a1f20 2px solid;
+    border-radius: 15px;
+    width: 40%;
+    padding: 45px 0px;
+    background-color: rgba(67, 37, 43, 0.38);
+}
+
 h1{
-    padding-top: 90px;
-    padding-bottom: 20px;
+    font-size: 50px;
+    margin-bottom: 20px;
 }
 
 a{
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     text-decoration: none;
-    border: 2px white solid;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #b990a0;
-    transition: background-color 0.35s ease;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background-color: rgba(73, 36, 45, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 a:hover{
     cursor: pointer;
-    background-color: #c8acb7;
-    transition: background-color 0.35s ease;
+    color: #cfcfcf;
+    background-color: rgba(126, 69, 82, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease;
 
 }
