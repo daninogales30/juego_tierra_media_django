@@ -54,9 +54,7 @@ class EquipmentListView(ListView):
 class DeleteEquipmentView(DeleteView):
     model = Equipment
     template_name = "equipment_confirm_delete.html"
-
-    def get_success_url(self):
-        return reverse('equipment_list')
+    success_url = reverse('equipment_list')
 
 
 def equipment_list_view(request):
