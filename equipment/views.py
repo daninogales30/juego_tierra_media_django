@@ -2,7 +2,7 @@ from django.views.generic import  ListView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from equipment.models import Equipment
 from character.models import Character
@@ -54,7 +54,9 @@ class EquipmentListView(ListView):
 class DeleteEquipmentView(DeleteView):
     model = Equipment
     template_name = "equipment_delete.html"
-    success_url = reverse('equipment_list')
+
+    def get_success_url(self):
+        return reverse('equipment_list')
 
 
 def equipment_list_view(request):
