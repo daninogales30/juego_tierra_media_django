@@ -58,7 +58,3 @@ class DeleteEquipmentView(DeleteView):
     def get_success_url(self):
         return reverse('equipment_list')
 
-
-def equipment_list_view(request):
-    equipments = Equipment.objects.all()
-    return render(request, "equipment_list.html", {"equipments": equipments})
