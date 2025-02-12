@@ -1,4 +1,12 @@
+@font-face {
+  font-family: 'Fuente Juego';
+  src: url('../fonts/Bruce Forever.ttf');
+    font-style: normal;
+  font-weight: normal;
+}
+
 body{
+    font-family: "Fuente Juego", serif;
     color: white;
     display: flex;
     flex-direction: column;
@@ -11,8 +19,7 @@ body{
 
 h1{
     padding-top: 90px;
-    padding-bottom: 240px;
-    text-decoration: underline;
+    padding-bottom: 20px;
 }
 
 a{
