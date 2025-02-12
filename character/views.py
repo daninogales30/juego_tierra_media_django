@@ -1,5 +1,4 @@
-from django.http import HttpResponseBadRequest, HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView, DeleteView
 
