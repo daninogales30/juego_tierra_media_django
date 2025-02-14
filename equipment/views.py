@@ -1,9 +1,6 @@
-from django.views.generic import  ListView, DeleteView
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import ListView, DeleteView, CreateView
 from django import forms
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from equipment.models import Equipment
 from character.models import Character
 
@@ -26,24 +23,19 @@ class EquipmentForm(forms.ModelForm):
         }
 
 
-def equipment_view(request):
-    if request.method == "POST":
-        form = EquipmentForm(request.POST)
-        if form.is_valid():
-            equipment = form.save()
-            character = form.cleaned_data.get('character', None)
+class EquipmentCreateView(CreateView):
+    model = Equipment
+    form_class = EquipmentForm
+    template_name = "equipment_form.html"
+    success_url = reverse_lazy('equipment_list')
 
-            if character:
-                print(
-                    f"Personaje: {character}, Tipo de equipo: {equipment.tipo}, Potencia: {equipment.potencia} añadidos")
+    def form_valid(self, form):
+        equipment = form.save()
+        character = form.cleaned_data.get('character', None)
+        if character:
+            print(f"Personaje : {character},Tipo de equipo : {equipment.tipo},Potencia : {equipment.potencia} estan añadidos")
 
-            return redirect('equipment_list')
-        else:
-            return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
-    else:
-        form = EquipmentForm()
-    return render(request, "equipment_form.html", {"form": form})
-
+        return super().form_valid(form)
 
 class EquipmentListView(ListView):
     model = Equipment
