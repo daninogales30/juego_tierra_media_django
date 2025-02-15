@@ -25,7 +25,13 @@ div{
     border-radius: 15px;
     width: 40%;
     padding: 45px 0px;
-    background-color: rgba(67, 37, 43, 0.38);
+    background-color: rgba(48, 25, 26, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+div:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px #2b1617;
 }
 
 h1{
@@ -40,7 +46,7 @@ a{
     padding: 8px 12px;
     border-radius: 7px;
     background-color: rgba(73, 36, 45, 0.62);
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.3s ease;
 }
 
 a:hover{
