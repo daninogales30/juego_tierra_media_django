@@ -3,5 +3,5 @@ from django.urls import path
 
 app_name = 'battle'
 urlpatterns = [
-    path('simulate/', views.BattleView.as_view(), name='simulate'),
+    path('', views.BattleView.as_view(), name='simulate'),
 ]
