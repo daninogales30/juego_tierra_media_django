@@ -8,10 +8,13 @@
 </head>
 <body>
     <h1>Simular Batalla</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">¡¡FIGHT!!</button>
-    </form>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">¡¡FIGHT!!</button>
+        </form>
+    </div>
+
 </body>
 </html>
