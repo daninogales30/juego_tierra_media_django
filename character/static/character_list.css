@@ -32,6 +32,7 @@ table {
     overflow: hidden;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
     color: white;
+    margin: 25px;
 }
 
 thead {
