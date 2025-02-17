@@ -7,6 +7,4 @@ urlpatterns = [
     path('list/', views.EquipmentListView.as_view(), name='equipment_list'),
     path('add/', views.EquipmentCreateView.as_view(), name='equipment_add'),
     path('delete/<int:pk>/', views.DeleteEquipmentView.as_view(), name='equipment_delete'),
-
-
 ]
