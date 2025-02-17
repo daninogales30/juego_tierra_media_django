@@ -6,7 +6,7 @@
 </head>
 <body>
     <h2>Lista de Equipamientos</h2>
-    <a href="{% url 'equipment_add' %}">Agregar nuevo equipamiento</a>
+    <a href="{% url 'equipment:equipment_add' %}">Agregar nuevo equipamiento</a>
 
     <table border="1">
         <thead>
@@ -24,7 +24,7 @@
                     <td>{{ equipment.tipo }}</td>
                     <td>{{ equipment.potencia }}</td>
                     <td>
-                        <a href="{% url 'equipment_delete' equipment.id %}">Eliminar</a>
+                        <a href="{% url 'equipment:equipment_delete' equipment.id %}">Eliminar</a>
                     </td>
                 </tr>
             {% empty %}
