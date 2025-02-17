@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Agregar Equipamiento</title>
 </head>
 <body>
-
+    <h2>Agregar Equipamiento</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Equipamiento</button>
+    </form>
+    <br>
+    <a href="{% url 'equipment_list' %}">Volver a la lista</a>
 </body>
 </html>

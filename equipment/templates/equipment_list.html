@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista de Equipamientos</title>
 </head>
 <body>
+    <h2>Lista de Equipamientos</h2>
 
+    <a href="{% url 'equipment_form' %}">Agregar nuevo equipamiento</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Potencia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipment in equipments %}
+                <tr>
+                    <td>{{ equipment.name }}</td>
+                    <td>{{ equipment.tipo }}</td>
+                    <td>{{ equipment.potencia }}</td>
+                    <td>
+                        <a href="{% url 'equipment_delete' equipment.id %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hay equipamientos disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
