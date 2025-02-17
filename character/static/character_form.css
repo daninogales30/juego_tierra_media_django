@@ -80,3 +80,18 @@ button:hover {
     color: #cfcfcf;
 }
 
+a {
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgba(73, 36, 45, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+a:hover {
+    background-color: rgba(126, 69, 82, 0.62);
+    color: #cfcfcf;
+}
