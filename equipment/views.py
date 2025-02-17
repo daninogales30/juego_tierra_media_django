@@ -27,7 +27,7 @@ class EquipmentCreateView(CreateView):
     model = Equipment
     form_class = EquipmentForm
     template_name = "equipment_form.html"
-    success_url = reverse_lazy('equipment_list')
+    success_url = reverse_lazy('equipment:equipment_list')
 
     def form_valid(self, form):
         equipment = form.save()
@@ -46,7 +46,5 @@ class EquipmentListView(ListView):
 class DeleteEquipmentView(DeleteView):
     model = Equipment
     template_name = "equipment_delete.html"
-
-    def get_success_url(self):
-        return reverse('equipment_list')
+    success_url = reverse_lazy('equipment:equipment_list')
 
