@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Lista de Equipamientos</h2>
-    <a href="{% url 'assign_equipment' %}">Asignar equipo a un personaje</a>
+    <a href="{% url 'equipment:assign_equipment' %}">Asignar equipo a un personaje</a>
 
     <table border="1">
         <thead>
@@ -26,7 +26,7 @@
                     <td>{{ equipment.tipo }}</td>
                     <td>{{ equipment.potencia }}</td>
                     <td>
-                        <a href="{% url 'equipment_delete' equipment.id %}">Eliminar</a>
+
                     </td>
                 </tr>
             {% empty %}
@@ -36,5 +36,7 @@
             {% endfor %}
         </tbody>
     </table>
+
+<a href="{% url 'equipment:assign_equipment.html' equipment.id %}">Eliminar</a>
 </body>
 </html>
