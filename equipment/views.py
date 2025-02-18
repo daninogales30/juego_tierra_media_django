@@ -9,7 +9,7 @@ from equipment.models import Equipment
 
 class EquipmentListView(ListView, FormView):
     model = Equipment
-    template_name = "templates/equipment_list.html"
+    template_name = "equipment_list.html"
     context_object_name = "equipments"
     form_class = AssignEquipmentForm
     success_url = reverse_lazy("equipment:equipment_list")
