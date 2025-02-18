@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/character_delete.css">
     <title>Borrar personaje {{ character.name }}</title>
 </head>
 <body>
-<h1>Eliminar Personaje</h1>
-  <p>¿Estás seguro de que quieres eliminar a <strong>{{ character.name }}</strong>?</p>
+<div>
+    <h1>Eliminar Personaje</h1>
+    <p>¿Estás seguro de que quieres eliminar a <strong>{{ character.name }}</strong>?</p>
 
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-    <a href="{% url 'character:character_list' %}">Cancelar</a>
-  </form>
-
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sí, eliminar</button>
+        <a href="{% url 'character:character_list' %}">Cancelar</a>
+    </form>
+</div>
 </body>
 </html>
