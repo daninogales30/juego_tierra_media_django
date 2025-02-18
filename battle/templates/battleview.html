@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Batalla</title>
+    <link rel="stylesheet" href="{% static 'battleview.css' %}">
+</head>
+<body>
+    <h1>Simular Batalla</h1>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">¡¡FIGHT!!</button>
+        </form>
+    </div>
+
+</body>
+</html>

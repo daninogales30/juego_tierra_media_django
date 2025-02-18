@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear personaje</title>
+    <link rel="stylesheet" href="../static/character_form.css">
+</head>
+<body>
+<div>
+    <h1>Crear personaje</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear</button>
+    </form>
+
+    <a href="{% url 'character:character_list' %}">Lista de personajes</a>
+    <a href="{% url 'character:principal_menu' %}">Iniciar</a>
+</div>
+</body>
+</html>

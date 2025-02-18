@@ -1,6 +1,6 @@
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView, DeleteView
 
 from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
@@ -16,13 +16,23 @@ class CreateCharacterView(CreateView):
     model = Character
     form_class = CharacterForm
     template_name = "character_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
+
+class DeleteCharacterView(DeleteView):
+    model = Character
+    template_name = "character_delete.html"
+    success_url = reverse_lazy("character:character_list")
+
+class DetailCharacterView(DetailView):
+    model = Character
+    template_name = "character_detail.html"
+    context_object_name = "character"
 
 class EquipWeaponView(UpdateView):
     model = Character
     fields = ["arma_equipada"]
-    template_name = "equip_weapon.html"
-    success_url = reverse_lazy("character_list")
+    template_name = "character_form.html"
+    success_url = reverse_lazy("character:character_list")
 
     def form_valid(self, form):
         character = form.instance
@@ -36,8 +46,8 @@ class EquipWeaponView(UpdateView):
 class ChangeUbicationView(UpdateView):
     model = Character
     fields = ["ubication"]
-    template_name = "change_ubication.html"
-    success_url = reverse_lazy("character_list")
+    template_name = "character_form.html"
+    success_url = reverse_lazy("character:character_list")
 
     def form_valid(self, form):
         new_ubication = form.cleaned_data["ubication"]
@@ -51,13 +61,14 @@ class ChangeUbicationView(UpdateView):
 
         return super().form_valid(form)
 
-class CharacterListView(ListView):
-    model = Character
-    template_name = "character_list.html"
-    context_object_name = "characters"
 
 class RelacionCreateView(CreateView):
     model = Relacion
     form_class = RelacionForm
     template_name = "relacion_form.html"
-    success_url = reverse_lazy("character_list")
+    success_url = reverse_lazy("character:character_list")
+
+class CharacterListView(ListView):
+    model = Character
+    template_name = "character_list.html"
+    context_object_name = "characters"

@@ -1,45 +1,22 @@
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from django import forms
-
-from character.models import Character
-from .models import Equipment
-
-TIPO_CHOICES = [
-    ('weapon', 'Weapon'),
-    ('armor', 'Armor'),
-]
-
-class EquipmentForm(forms.ModelForm):
-    character = forms.ModelChoiceField(required=False,queryset=Character.objects.all(),label="Asignar a personaje")
-    tipo = forms.ChoiceField(choices=TIPO_CHOICES, widget=forms.Select(), label="Tipo de equipo")
-
-    class Meta:
-        model = Equipment
-        fields = ['name', 'tipo', 'potencia']
-        labels = {
-            'name': 'Nombre',
-            'tipo': 'Tipo de equipo',
-            'potencia': 'Potencia'
-        }
+from django.views.generic import ListView, FormView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from equipment.forms import AssignEquipmentForm
+from equipment.models import Equipment
 
 
-def equipment_view(request):
-    if request.method == "POST":
-        form = EquipmentForm(request.POST)
-        if form.is_valid():
-            equipment = form.save()
-            character = form.cleaned_data.get('character', None)
-            print(f"Personaje: {character}, Arma tipo: {equipment.tipo}, Potencia: {equipment.potencia}, añadidos")
-            return HttpResponse("¡Equipo guardado exitosamente!")
-        else:
-            return HttpResponse("Error en el formulario. Por favor, revisa los datos.")
-    else:
-        form = EquipmentForm()
-    return render(request, {"form": form})
 
-def equipment_list_view(request):
-    equipments = Equipment.objects.all()
-    return render(request, {"equipments": equipments})
 
+class EquipmentListView(ListView, FormView):
+    model = Equipment
+    template_name = "templates/equipment_list.html"
+    context_object_name = "equipments"
+    form_class = AssignEquipmentForm
+    success_url = reverse_lazy("equipment:equipment_list")
+
+    def form_valid(self, form):
+        character = form.cleaned_data['character']
+        equipment = form.cleaned_data['equipment']
+
+        character.equipment.add(equipment)
+        return redirect(self.success_url)

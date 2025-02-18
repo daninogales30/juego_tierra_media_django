@@ -5,8 +5,8 @@ from character.models import Character
 class Battle(models.Model):
     character1 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character1' )
     character2 = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='character2' )
-    winner = models.ForeignKey(Character,null=True, blank=True, on_delete=models.CASCADE, related_name='ganador_batalla' )
-    date = models.DateTimeField()
+    winner = models.ForeignKey(Character,null=True, blank=True, on_delete=models.SET_NULL, related_name='ganador_batalla' )
+    date = models.DateTimeField(auto_now_add=True)
 
     def simulate(self):
         if not self.character1.arma_equipada or not self.character2.arma_equipada:
