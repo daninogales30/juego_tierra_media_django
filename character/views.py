@@ -36,12 +36,14 @@ class EquipWeaponView(UpdateView):
 
     def form_valid(self, form):
         character = form.instance
-        weapon = form.cleaned_data["arma_equipada"]
+        weapon = form.cleaned_data.get("arma_equipada")
 
         if weapon and weapon not in character.equipment.all():
-            return HttpResponseBadRequest("No puedes equipar un arma que no posees.")
+            form.add_error("arma_equipada", "No puedes equipar un arma que no posees.")
+            return self.form_invalid(form)  # Devuelve la plantilla con el error
 
         return super().form_valid(form)
+
 
 class ChangeUbicationView(UpdateView):
     model = Character
@@ -50,17 +52,18 @@ class ChangeUbicationView(UpdateView):
     success_url = reverse_lazy("character:character_list")
 
     def form_valid(self, form):
-        new_ubication = form.cleaned_data["ubication"]
-        character = self.get_object()  # Obtener la instancia actual del personaje
+        new_ubication = form.cleaned_data.get("ubication")
+        character = self.get_object()
 
         if len(new_ubication) < 3:
-            return HttpResponseBadRequest("La ubicación debe tener al menos 3 caracteres.")
+            form.add_error("ubication", "La ubicación debe tener al menos 3 caracteres.")
+            return self.form_invalid(form)
 
         if new_ubication == character.ubication:
-            return HttpResponseBadRequest("El personaje ya se encuentra en esta ubicación.")
+            form.add_error("ubication", "El personaje ya se encuentra en esta ubicación.")
+            return self.form_invalid(form)
 
         return super().form_valid(form)
-
 
 class RelacionCreateView(CreateView):
     model = Relacion
