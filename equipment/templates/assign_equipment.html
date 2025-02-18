@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Asignar Equipo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'equipment_list.css' %}">
+</head>
+<body>
+    <h2>Asignar Equipamiento a un Personaje</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <th>Selecciona un personaje</th>
+                <td>{{ form.character }}</td>
+            </tr>
+            <tr>
+                <th>Selecciona un equipo</th>
+                <td>{{ form.equipment }}</td>
+            </tr>
+        </table>
+        <button type="submit">Asignar</button>
+    </form>
+
+    <a href="{% url 'equipment_list' %}">Volver a la lista de equipos</a>
+</body>
+</html>
