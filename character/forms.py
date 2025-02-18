@@ -7,6 +7,12 @@ class CharacterForm(forms.ModelForm):
         model = Character
         fields = ["name", "race", "faction", "ubication", "equipment", "arma_equipada"]
 
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        if Character.objects.filter(name=name).exists():
+            raise forms.ValidationError("Ya existe un personaje con este nombre.")
+        return name
+
 class RelacionForm(forms.ModelForm):
     class Meta:
         model = Relacion
