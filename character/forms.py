@@ -18,6 +18,11 @@ class RelacionForm(forms.ModelForm):
         model = Relacion
         fields = ["character", "related_to", "tipo", "confidence_level"]
 
+    def clean(self):
+        if self.cleaned_data.get("character") == self.cleaned_data.get("related_to"):
+            raise forms.ValidationError("Un personaje no puede relacionarse consigo mismo.")
+        return self.cleaned_data
+
     def save(self, commit=True):
         return Relacion.objects.update_or_create(
             character=self.cleaned_data["character"],
