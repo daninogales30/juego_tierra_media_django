@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Lista de Equipamientos</h2>
-    <a href="{% url 'equipment:assign_equipment' %}">Asignar equipo a un personaje</a>
+    <a href="{% url 'equipment:assign_equipment' %}">Asignar equipamiento a un personaje</a>
 
     <table border="1">
         <thead>
@@ -16,7 +16,7 @@
                 <th>Nombre</th>
                 <th>Tipo</th>
                 <th>Potencia</th>
-                <th>Acciones</th>
+                <th>Imagen arma</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,6 @@
         </tbody>
     </table>
 
-<a href="{% url 'equipment:assign_equipment.html' equipment.id %}">Eliminar</a>
+<a href="{% url 'character:principal_menu' %}">Volver al inicio</a>
 </body>
 </html>
