@@ -63,7 +63,7 @@ input:focus, textarea:focus, select:focus {
     border-color: #cfcfcf;
 }
 
-option[value="elfo"], option[value="humana"], option[value="Enano"], option[value="Hobbit"]{
+option[value="elfo"], option[value="humana"], option[value="Enano"], option[value="Hobbit"], #id_arma_equipada{
     color: black;
 }
 
