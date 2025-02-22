@@ -5,14 +5,17 @@
 }
 
 body {
-    font-family: sans-serif;
-    color: white;
-    background: linear-gradient(#3a1f20, #2b1617);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+   font-family: sans-serif;
+   color: white;
+   background: linear-gradient(#3a1f20, #2b1617);
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
 }
+
 
 div {
     background: linear-gradient(to bottom, #5e3334, #492627);
@@ -60,9 +63,8 @@ input:focus, textarea:focus, select:focus {
     border-color: #cfcfcf;
 }
 
-select option {
+option[value="elfo"], option[value="humana"], option[value="Enano"], option[value="Hobbit"]{
     color: black;
-    background-color: white;
 }
 
 button {

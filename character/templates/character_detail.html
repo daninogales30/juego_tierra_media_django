@@ -2,54 +2,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'character_detail.css' %}">
-    <title>Detalles personaje</title>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="{% static 'character_detail.css' %}">
+   <title>Detalles personaje</title>
 </head>
 <body>
 <div>
-    <h1>Detalles de {{ character.name }}</h1>
+   <h1>Detalles de {{ character.name }}</h1>
 
-    <ul>
-        <li><strong>Raza:</strong> {{ character.get_race_display }}</li>
-        <li><strong>Facción:</strong> {{ character.faction }}</li>
-        <li><strong>Ubicación:</strong> {{ character.ubication }}</li>
-        <li><strong>Arma Equipada:</strong> {{ character.arma_equipada|default:"Sin arma" }}</li>
-        <li><strong>Equipo:</strong>
-            {% if character.equipment.all %}
-                <ul>
-                    {% for item in character.equipment.all %}
-                        <li>{{ item.name }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                Ningún equipo equipado.
-            {% endif %}
-        </li>
-    </ul>
 
-    <h3>Relaciones</h3>
-    {% if character.personaje1.all or character.personaje2.all %}
-        <ul>
-            {% for relacion in character.personaje1.all %}
-                <li>{{ character.name }} es {{ relacion.get_tipo_display }} de {{ relacion.related_to.name }}
-                    (Confianza: {{ relacion.confidence_level }})
-                </li>
-            {% endfor %}
-            {% for relacion in character.personaje2.all %}
-                <li>{{ relacion.related_to.name }} es {{ relacion.get_tipo_display }} de {{ character.name }}
-                    (Confianza: {{ relacion.confidence_level }})
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Este personaje no tiene relaciones registradas.</p>
-    {% endif %}
+   <ul>
+       <li><strong>Raza:</strong> {{ character.get_race_display }}</li>
+       <li><strong>Facción:</strong> {{ character.faction }}</li>
+       <li><strong>Ubicación:</strong> {{ character.ubication }}</li>
+       <li><strong>Arma Equipada:</strong> {{ character.arma_equipada|default:"Sin arma" }}</li>
+       <li><strong>Equipo:</strong>
+           {% if character.equipment.all %}
+               <ul>
+                   {% for item in character.equipment.all %}
+                       <li>{{ item.name }}</li>
+                   {% endfor %}
+               </ul>
+           {% else %}
+               Ningún equipo equipado.
+           {% endif %}
+       </li>
+   </ul>
 
-    <a href="{% url 'character:character_list' %}">Volver a la lista</a>
-    <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a>
-    <a href="{% url 'character:equip_weapon' character.id %}">Equipar Arma</a>
-    <a href="{% url 'character:delete_character' character.id %}">Eliminar Personaje</a>
+
+   <h2>Relaciones</h2>
+   {% if character.personaje1.all or character.personaje2.all %}
+       <ul>
+           {% for relacion in character.personaje1.all %}
+               <li>{{ character.name }} es {{ relacion.get_tipo_display }} de {{ relacion.related_to.name }}
+                   (Confianza: {{ relacion.confidence_level }})
+               </li>
+           {% endfor %}
+           {% for relacion in character.personaje2.all %}
+               <li>{{ character.name }} es {{ relacion.get_tipo_display }} de {{ relacion.character.name }}
+                   (Confianza: {{ relacion.confidence_level }})
+               </li>
+           {% endfor %}
+       </ul>
+   {% else %}
+       <p>Este personaje no tiene relaciones registradas.</p>
+   {% endif %}
+
+
+   <a href="{% url 'character:character_list' %}">Volver a la lista</a>
+   <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a>
+   <a href="{% url 'character:equip_weapon' character.id %}">Equipar Arma</a>
+   <a href="{% url 'character:delete_character' character.id %}">Eliminar Personaje</a>
 </div>
 </body>
 </html>
