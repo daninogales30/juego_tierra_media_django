@@ -15,7 +15,6 @@
        <li><strong>Raza:</strong> {{ character.get_race_display }}</li>
        <li><strong>Facción:</strong> {{ character.faction }}</li>
        <li><strong>Ubicación:</strong> {{ character.ubication }}</li>
-       <li><strong>Arma Equipada:</strong> {{ character.arma_equipada|default:"Sin arma" }}</li>
        <li><strong>Equipo:</strong>
            {% if character.equipment.all %}
                <ul>
@@ -27,6 +26,7 @@
                Ningún equipo equipado.
            {% endif %}
        </li>
+       <li><strong>Arma Equipada:</strong> {{ character.arma_equipada|default:"Sin arma" }}</li>
    </ul>
 
 

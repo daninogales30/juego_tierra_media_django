@@ -7,8 +7,11 @@
 body {
    font-family: sans-serif;
    color: white;
-   background: linear-gradient(#3a1f20, #2b1617);
    display: flex;
+    background-image: url("images/fondo.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
    flex-direction: column;
    gap: 20px;
    justify-content: center;

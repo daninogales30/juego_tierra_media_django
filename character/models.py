@@ -6,24 +6,28 @@ class Character(models.Model):
     race = models.CharField(max_length=50, choices=[('elfo', 'Elfo'), ('humana', 'Humana'), ('Enano', 'Enano'), ('Hobbit', 'Hobbit')])
     faction = models.CharField(max_length=100)
     ubication = models.CharField(max_length=100)
-    equipment = models.ManyToManyField(Equipment, blank=True, related_name='equipamiento' )
-    arma_equipada = models.ForeignKey(Weapon, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada' )
+    equipment = models.ManyToManyField(Equipment, blank=False, related_name='equipamiento' )
+    arma_equipada = models.ForeignKey(Equipment, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada')
 
     def add_equipment(self, new_equipment):
+        """ Añade equipamiento al personaje """
         self.equipment.add(new_equipment)
 
     def equip_weapon(self, weapon):
-        if weapon in self.equipment.all() and weapon.es_arma():
+        """ Equipa el arma al personaje """
+        if weapon.tipo.lower() == 'weapon' and weapon in self.equipment.all():
             self.arma_equipada = weapon
             self.save()
         else:
-            raise ValueError("El arma no es válida.")
+            raise ValueError("El arma no es válida o no está en el inventario.")
 
     def change_ubication(self, new_ubication):
+        """ Cambia la ubicacion al personaje """
         self.ubication = new_ubication
         self.save()
 
     def get_power(self):
+        """ Obtiene la potencia del arma """
         return self.arma_equipada.potencia if self.arma_equipada else "No se puede obtener la potencia de este arma"
 
     def __str__(self):

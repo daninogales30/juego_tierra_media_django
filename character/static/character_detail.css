@@ -7,7 +7,10 @@
 body {
    font-family: sans-serif;
    color: white;
-   background: linear-gradient(#3a1f20, #2b1617);
+    background-image: url("images/fondo.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
    display: flex;
    flex-direction: column;
    gap: 20px;
@@ -42,13 +45,13 @@ h1 {
 }
 
 h3 {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
 li {
     list-style: none;
-
+    margin-bottom: 10px;
 }
 
 a{

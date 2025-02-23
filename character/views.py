@@ -40,7 +40,10 @@ class EquipWeaponView(UpdateView):
 
         if weapon and weapon not in character.equipment.all():
             form.add_error("arma_equipada", "No puedes equipar un arma que no posees.")
-            return self.form_invalid(form)  # Devuelve la plantilla con el error
+            return self.form_invalid(form)
+
+        if weapon:
+            character.equip_weapon(weapon)
 
         return super().form_valid(form)
 

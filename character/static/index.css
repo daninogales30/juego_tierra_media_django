@@ -7,16 +7,20 @@
 body{
     font-family: sans-serif;
     color: white;
-    background: linear-gradient(#3a1f20, #2b1617);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    background-image: url("images/fondo.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 
 div{
-    background: linear-gradient(to bottom, #5e3334, #492627);
+    background: linear-gradient(to bottom, rgba(94, 51, 52, 0.95), rgba(58, 31, 32, 0.95));
     border: 5px saddlebrown solid;
     border-radius: 20px;
     padding: 80px;

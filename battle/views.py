@@ -13,10 +13,18 @@ class BattleView(FormView):
     template_name = 'battleview.html'
 
     def form_valid(self, form):
-        personaje1 = form.cleaned_data['personaje1']
-        personaje2 = form.cleaned_data['personaje2']
+        jugador1 = form.cleaned_data['jugador1']
+        jugador2 = form.cleaned_data['jugador2']
 
-        batalla = Battle.objects.create(character1=personaje1, character2=personaje2)
+        if jugador1 == jugador2:
+            form.add_error("jugador1", "No se puede pelear con el mismo personaje")
+            return self.form_invalid(form)
+
+        if not jugador1.arma_equipada or not jugador2.arma_equipada:
+            form.add_error("jugador1", "Se necesita equipar un arma en ambos personajes")
+            return self.form_invalid(form)
+
+        batalla = Battle.objects.create(character1=jugador1, character2=jugador2)
         batalla.simulate()
 
         return render(self.request, 'battleview.html', {'form': form, 'ganador': batalla.winner})

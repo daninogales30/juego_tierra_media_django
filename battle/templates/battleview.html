@@ -16,5 +16,11 @@
         </form>
     </div>
 
+    {% if ganador %}
+    	<div>
+            <h2>El ganador es... {{ ganador.name }}</h2>
+            <img src="../static/images/14Um.gif" alt="">
+        </div>
+    {% endif %}
 </body>
 </html>

@@ -5,7 +5,7 @@ from character.models import Character, Relacion
 class CharacterForm(forms.ModelForm):
     class Meta:
         model = Character
-        fields = ["name", "race", "faction", "ubication", "equipment", "arma_equipada"]
+        fields = ["name", "race", "faction", "ubication", "equipment"]
 
     def clean_name(self):
         name = self.cleaned_data.get("name")
