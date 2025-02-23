@@ -7,12 +7,16 @@
 body {
     font-family: sans-serif;
     color: white;
-    background: linear-gradient(#2b1617, #3a1f20);
+    background-image: url("images/fondo.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    height: 100vh;
+
 }
 
 h2 {
