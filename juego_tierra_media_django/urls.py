@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('character.urls')),
     path('equipment/', include('equipment.urls')),
     path('battle/', include('battle.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

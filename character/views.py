@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView, DeleteView
@@ -6,7 +7,7 @@ from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
 
 
-class StartGameView(TemplateView):
+class StartGameView(LoginRequiredMixin, TemplateView):
     template_name = "start_game.html"
 
 class PrincipalMenuView(TemplateView):
