@@ -4,6 +4,7 @@ from django.urls import path
 app_name = 'character'
 urlpatterns = [
     path('', views.StartGameView.as_view(), name='start_game'),
+    path('register/', views.RegistroUsuarioView.as_view(), name='register'),
     path('principal_menu/', views.PrincipalMenuView.as_view(), name='principal_menu'),
     path('delete_character/<int:pk>/', views.DeleteCharacterView.as_view(),name='delete_character'),
     path('detail_character/<int:pk>/', views.DetailCharacterView.as_view(), name='detail_character'),
