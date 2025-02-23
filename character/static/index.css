@@ -52,3 +52,21 @@ a:hover{
     transition: background-color 0.35s ease, color 0.35s ease;
 
 }
+
+button {
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background-color: rgba(73, 36, 45, 0.62);
+    border: none; /* Quita el borde por defecto */
+    cursor: pointer;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+button:hover {
+    color: #cfcfcf;
+    background-color: rgba(126, 69, 82, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}

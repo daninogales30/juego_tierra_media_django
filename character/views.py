@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
@@ -7,13 +8,18 @@ from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
 
 
+class RegistroUsuarioView(CreateView):
+    template_name = "registration/registro.html"
+    form_class = UserCreationForm
+    success_url = reverse_lazy("character:start_game")
+
 class StartGameView(LoginRequiredMixin, TemplateView):
     template_name = "start_game.html"
 
-class PrincipalMenuView(TemplateView):
+class PrincipalMenuView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
-class CreateCharacterView(CreateView):
+class CreateCharacterView(LoginRequiredMixin, CreateView):
     model = Character
     form_class = CharacterForm
     template_name = "character_form.html"
@@ -26,17 +32,17 @@ class CreateCharacterView(CreateView):
         context["button_text"] = "Guardar"
         return context
 
-class DeleteCharacterView(DeleteView):
+class DeleteCharacterView(LoginRequiredMixin, DeleteView):
     model = Character
     template_name = "character_delete.html"
     success_url = reverse_lazy("character:character_list")
 
-class DetailCharacterView(DetailView):
+class DetailCharacterView(LoginRequiredMixin, DetailView):
     model = Character
     template_name = "character_detail.html"
     context_object_name = "character"
 
-class EquipWeaponView(UpdateView):
+class EquipWeaponView(LoginRequiredMixin, UpdateView):
     model = Character
     fields = ["arma_equipada"]
     template_name = "character_form.html"
@@ -62,7 +68,7 @@ class EquipWeaponView(UpdateView):
         context["button_text"] = "Equipar"
         return context
 
-class ChangeUbicationView(UpdateView):
+class ChangeUbicationView(LoginRequiredMixin, UpdateView):
     model = Character
     fields = ["ubication"]
     template_name = "character_form.html"
@@ -88,7 +94,8 @@ class ChangeUbicationView(UpdateView):
         context["subtitle"] = "Cambiar ubicación"
         context["button_text"] = "Cambiar"
         return context
-class RelacionCreateView(CreateView):
+
+class RelacionCreateView(LoginRequiredMixin, CreateView):
     model = Relacion
     form_class = RelacionForm
     template_name = "relacion_form.html"

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import ListView, FormView
 from django.urls import reverse_lazy
@@ -8,7 +9,7 @@ from equipment.models import Equipment
 
 
 
-class EquipmentListView(ListView, FormView):
+class EquipmentListView(LoginRequiredMixin, ListView, FormView):
     model = Equipment
     template_name = "equipment_list.html"
     context_object_name = "equipments"
@@ -22,7 +23,7 @@ class EquipmentListView(ListView, FormView):
         character.equipment.add(equipment)
         return redirect(self.success_url)
 
-class AssignEquipmentView(View):
+class AssignEquipmentView(LoginRequiredMixin, View):
     template_name = "assign_equipment.html"
 
     def get(self, request):

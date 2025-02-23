@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 
 from django.shortcuts import render
@@ -8,7 +9,7 @@ from battle.models import Battle
 
 
 # Create your views here.
-class BattleView(FormView):
+class BattleView(LoginRequiredMixin, FormView):
     form_class = BattleForm
     template_name = 'battleview.html'
 

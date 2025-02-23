@@ -11,6 +11,10 @@
         <a href="{% url 'character:create_character' %}">Crear personaje</a>
         <a href="{% url 'character:character_list' %}">Lista de personajes</a>
         <a href="{% url 'battle:simulate' %}">Batalla</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">logout</button>
+        </form>
     </div>
 </body>
 </html>
