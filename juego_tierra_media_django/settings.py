@@ -73,10 +73,7 @@ TEMPLATES = [
         },
     },
 ]
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "localhost",
-]
+
 WSGI_APPLICATION = 'juego_tierra_media_django.wsgi.application'
 
 
