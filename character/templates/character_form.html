@@ -3,16 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Crear personaje</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'character_form.css' %}">
 </head>
 <body>
 <div>
-    <h1>Equipar arma</h1>
+    <h1>{{ subtitle }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Equipar</button>
+        <button type="submit">{{ button_text }}</button>
     </form>
 </div>
 

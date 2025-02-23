@@ -18,6 +18,13 @@ class CreateCharacterView(CreateView):
     template_name = "character_form.html"
     success_url = reverse_lazy("character:character_list")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Crear Personaje"
+        context["subtitle"] = "Crear Nuevo Personaje"
+        context["button_text"] = "Guardar"
+        return context
+
 class DeleteCharacterView(DeleteView):
     model = Character
     template_name = "character_delete.html"
@@ -47,6 +54,12 @@ class EquipWeaponView(UpdateView):
 
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Equipar arma"
+        context["subtitle"] = "Equipar un arma"
+        context["button_text"] = "Equipar"
+        return context
 
 class ChangeUbicationView(UpdateView):
     model = Character
@@ -68,6 +81,12 @@ class ChangeUbicationView(UpdateView):
 
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Cambiar ubicación"
+        context["subtitle"] = "Cambiar ubicación"
+        context["button_text"] = "Cambiar"
+        return context
 class RelacionCreateView(CreateView):
     model = Relacion
     form_class = RelacionForm
