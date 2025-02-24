@@ -64,6 +64,19 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+body a {
+   margin-top: 15px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: rgba(126, 69, 82, 0.9);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    opacity: 80%;
+}
+
 
 button:hover {
     background-color: rgba(140, 70, 75, 0.9);

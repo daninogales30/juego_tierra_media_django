@@ -50,18 +50,18 @@ tr:hover {
     background: rgba(140, 70, 75, 0.7);
 }
 
-a {
-    font-size: 18px;
+body a {
+   margin: 15px;
+    padding: 10px 15px;
+    font-size: 16px;
     color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 7px;
-    background-color: rgba(73, 36, 45, 0.62);
-    transition: background-color 0.35s ease;
-    display: inline-block;
-    margin: 100px;
+    background-color: rgba(126, 69, 82, 0.9);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    opacity: 80%;
 }
-
 
 a:hover {
     color: #cfcfcf;
