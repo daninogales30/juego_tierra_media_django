@@ -50,8 +50,39 @@ tr:hover {
     background: rgba(140, 70, 75, 0.7);
 }
 
-body a {
-   margin: 15px;
+form {
+    width: 60%;
+    background: rgba(73, 36, 45, 0.7);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px #1c0e0e;
+}
+
+form table {
+    width: 100%;
+}
+
+form th {
+    background: rgba(126, 69, 82, 0.9);
+    padding: 10px;
+}
+
+form td {
+    padding: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+}
+
+button {
+    margin-top: 15px;
     padding: 10px 15px;
     font-size: 16px;
     color: white;
@@ -60,10 +91,26 @@ body a {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    opacity: 80%;
+}
+
+button:hover {
+    background-color: rgba(140, 70, 75, 0.9);
+}
+
+a {
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background-color: rgba(73, 36, 45);
+    transition: background-color 0.35s ease, color 0.35s ease;
+    margin-top: 10px;
 }
 
 a:hover {
+    cursor: pointer;
     color: #cfcfcf;
     background-color: rgba(126, 69, 82, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease;
 }

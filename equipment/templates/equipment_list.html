@@ -7,33 +7,37 @@
     <link rel="stylesheet" type="text/css" href="{% static 'equipment_list.css' %}">
 </head>
 <body>
-    <h2>Lista de Equipamientos</h2>
-    <a href="{% url 'equipment:assign_equipment' %}">Asignar equipamiento a un personaje</a>
+<h2>Lista de Equipamientos</h2>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Potencia</th>
-                <th>Imagen arma</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for equipment in equipments %}
-                <tr>
-                    <td>{{ equipment.name }}</td>
-                    <td>{{ equipment.tipo }}</td>
-                    <td>{{ equipment.potencia }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">No hay equipamientos disponibles.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{% url 'character:principal_menu' %}">Volver al inicio</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Potencia</th>
+        <th>Imagen arma</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for equipment in equipments %}
+        <tr>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.tipo }}</td>
+            <td>{{ equipment.potencia }}</td>
+            <td>
+                <img src="{% static 'images/' %}{{ equipment.name }}.png" alt="{{ equipment.name }}"
+                     width="100">
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4">No hay equipamientos disponibles.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'equipment:assign_equipment' %}">Asignar equipamiento a un personaje</a>
+<a href="{% url 'character:principal_menu' %}">Volver al inicio</a>
 </body>
 </html>
