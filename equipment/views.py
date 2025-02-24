@@ -22,7 +22,7 @@ class EquipmentListView(ListView, FormView):
         character.equipment.add(equipment)
         return redirect(self.success_url)
 
-class AssignEquipmentView(UpdateView, FormView):
+class AssignEquipmentView(FormView):
     form_class = AssignEquipmentForm
     template_name = "assign_equipment.html"
     success_url = reverse_lazy("equipment:equipment_list")
@@ -31,4 +31,6 @@ class AssignEquipmentView(UpdateView, FormView):
         character = form.cleaned_data['character']
         equipment = form.cleaned_data['equipment']
         character.add_equipment(equipment)
+
+        return super().form_valid(form)
 
