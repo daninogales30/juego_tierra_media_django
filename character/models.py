@@ -12,14 +12,18 @@ class Character(models.Model):
     def add_equipment(self, new_equipment):
         """ Añade equipamiento al personaje """
         self.equipment.add(new_equipment)
+        self.save()
+        print(self.equipment.all())
 
     def equip_weapon(self, weapon):
         """ Equipa el arma al personaje """
-        if weapon.tipo.lower() == 'weapon' and weapon in self.equipment.all():
+        if weapon.tipo.lower() == 'weapon':
+            if weapon not in self.equipment.all():
+                self.add_equipment(weapon)
             self.arma_equipada = weapon
             self.save()
         else:
-            raise ValueError("El arma no es válida o no está en el inventario.")
+            raise ValueError("El arma seleccionada no es válida.")
 
     def change_ubication(self, new_ubication):
         """ Cambia la ubicacion al personaje """
