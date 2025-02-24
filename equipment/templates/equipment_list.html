@@ -26,7 +26,11 @@
                     <td>{{ equipment.tipo }}</td>
                     <td>{{ equipment.potencia }}</td>
                     <td>
-
+                        {% if equipment.imagen %}
+                            <img src="{{ equipment.imagen.url }}" alt="Imagen de {{ equipment.name }}">
+                        {% else %}
+                            No esta disponible
+                        {% endif %}
                     </td>
                 </tr>
             {% empty %}
