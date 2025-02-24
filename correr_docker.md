@@ -57,6 +57,7 @@ Esto aplicará las migraciones a la base de datos PostgreSQL y te pedirá un usu
 ### 5️⃣ Verificar acceso a la aplicación Django
 Abre tu navegador y entra a:
 
+### Entra en navegacion privada, para que no de problema ninguno con la caché, ya que mas de una vez no carga bien por culpa de la caché
 - [http://localhost:8000/](http://localhost:8000/) → Debería cargar la aplicación Django.
 - [http://localhost:8000/admin/](http://localhost:8000/admin/) → Panel de administración de Django.
 
