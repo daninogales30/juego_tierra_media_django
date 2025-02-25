@@ -5,11 +5,34 @@
     <meta charset="UTF-8">
     <title>Batalla</title>
     <link rel="stylesheet" href="{% static 'battleview.css' %}">
+    <style>
+@keyframes confeti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+#winnerContainer {
+    position: relative;
+    padding: 20px;
+    background: rgba(0,0,0,0.9);
+    border-radius: 10px;
+    margin: 20px auto;
+    width: fit-content;
+    color: white;
+    text-align: center;
+}
+</style>
 </head>
 <body>
     <h1>Simular Batalla</h1>
     <div>
-        <form method="post">
+        <form method="post" id="battleForm">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">¡¡FIGHT!!</button>
@@ -17,11 +40,96 @@
     </div>
 
     {% if ganador %}
-    	<div>
-            <h2>El ganador es... {{ ganador.name }}</h2>
-            <img src="../static/images/14Um.gif" alt="">
-        </div>
+    <div id="winnerContainer" style="position: relative;">
+        <h2>El ganador es... {{ ganador.name }}</h2>
+        <img src="../static/images/14Um.gif" alt="">
+    </div>
     {% endif %}
     <a href="{% url 'character:principal_menu'%}">Volver al menú principal</a>
+
+    <script>
+        function createConfettiFromElement(element) {
+    const rect = element.getBoundingClientRect();
+    const colors = ['#ff0000', '#ffd700', '#00ff00', '#ff00ff', '#00ffff', '#ffffff'];
+
+    // Crear 100 partículas de confeti
+    for(let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+            position: fixed;
+            width: ${Math.random() * 4 + 2}px;
+            height: ${Math.random() * 4 + 2}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+            left: ${rect.left + Math.random() * rect.width}px;
+            top: ${rect.top + Math.random() * rect.height}px;
+            pointer-events: none;
+            z-index: 9999;
+            transform-origin: center;
+            animation: confeti-fall ${Math.random() * 2 + 1.5}s ease-out forwards;
+        `;
+
+        document.body.appendChild(confetti);
+
+        // Animación personalizada
+        const startTime = Date.now();
+        const animate = () => {
+            const timePassed = Date.now() - startTime;
+            const progress = timePassed / 1500;
+
+            confetti.style.transform = `
+                translate(
+                    ${Math.sin(progress * 10) * 50}px,
+                    ${progress * window.innerHeight}px
+                )
+                rotate(${progress * 360}deg)
+            `;
+
+            confetti.style.opacity = 1 - (progress * 1.2);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                confetti.remove();
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }
+}
+
+// En el evento submit del formulario
+document.getElementById('battleForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("{% url 'battle:simulate' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const winnerDiv = doc.getElementById('winnerContainer');
+
+        if(winnerDiv) {
+            const existingWinner = document.getElementById('winnerContainer');
+            if(existingWinner) existingWinner.remove();
+
+            const newWinner = document.body.insertBefore(
+                winnerDiv,
+                document.querySelector('a')
+            );
+
+            // Esperar a que el div esté en el DOM
+            setTimeout(() => createConfettiFromElement(newWinner), 50);
+        }
+    });
+});
+    </script>
 </body>
 </html>
