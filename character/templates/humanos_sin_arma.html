@@ -25,7 +25,7 @@
                     <td>{{ humano.faction }}</td>
                     <td>{{ humano.ubication }}</td>
                     <td>
-                        <a href="{% url 'equipment:assign_equipment' %}" class="btn-añadir">Agregar Arma</a>
+                        <a href="{% url 'character:equip_weapon' humano.id %}" class="btn-añadir">Equipar Arma</a>
                     </td>
                 </tr>
             {% empty %}

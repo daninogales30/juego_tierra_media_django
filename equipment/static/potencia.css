@@ -6,7 +6,7 @@
 
 body {
     font-family: sans-serif;
-    background-image: url("images/fondo.webp"); /* Asegúrate de que la ruta de la imagen sea correcta */
+    background-image: url("images/fondo.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
