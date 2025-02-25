@@ -99,24 +99,22 @@ button:hover {
 }
 
 a {
-    font-size: 25px;
+    font-size: 20px;
     color: white;
     text-decoration: none;
-    padding: 20px 32px;
+    padding: 10px 15px;
     border-radius: 7px;
-    background-color: rgba(73, 36, 45);
+    background-color: rgba(73, 36, 45, 0.8);
     transition: background-color 0.35s ease, color 0.35s ease;
-    margin-top: 10px;
-    opacity: 90%;
+    text-align: center;
+    display: inline-block;
 }
 
 a:hover {
-    padding: 20px;
-    cursor: pointer;
+    background-color: rgba(126, 69, 82, 0.8);
     color: #cfcfcf;
-    background-color: rgba(126, 69, 82, 0.62);
-    transition: background-color 0.35s ease, color 0.35s ease;
 }
+
 
 .back-link {
     margin-top: 15px;

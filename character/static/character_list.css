@@ -57,28 +57,30 @@ tbody tr:hover {
 }
 
 a {
-    font-size: 16px;
+    font-size: 20px;
     color: white;
     text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    margin: 5px;
-    background-color: rgba(73, 36, 45, 0.62);
+    padding: 10px 15px;
+    border-radius: 7px;
+    background-color: rgba(73, 36, 45, 0.8);
     transition: background-color 0.35s ease, color 0.35s ease;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 a:hover {
-    background-color: rgba(126, 69, 82, 0.62);
+    background-color: rgba(126, 69, 82, 0.8);
     color: #cfcfcf;
 }
 
 tr td:last-child {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
 
 tr td:last-child a {
     display: inline-block;
-   margin: 2px 0;
+    margin: 2px 0;
 }
