@@ -1,10 +1,36 @@
+from character.forms import CharacterForm, RelacionForm
+from character.models import Character, Relacion
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, CreateView, ListView, DetailView, DeleteView
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from character.forms import CharacterForm, RelacionForm
-from character.models import Character, Relacion
+from character.models import Relacion
+from rest_framework import viewsets
+from rest_framework import filters
+from character.models import Character
+from .serializers import RelacionSerializer, CharacterSerializer
+
+class RelacionViewSet(viewsets.ModelViewSet):
+    queryset = Relacion.objects.all()
+    serializer_class = RelacionSerializer
+
+class CharacterViewSet(viewsets.ModelViewSet):
+    queryset = Character.objects.all()
+    serializer_class = CharacterSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'faction']
+
+    @action(detail=True, methods=['get'])
+    def stats(self, request, pk=None):
+        character = self.get_object()
+        return Response({
+            "total_equipment": character.equipment.count(),
+            "current_weapon_power": character.arma_equipada.potencia if character.arma_equipada else 0,
+            "relationships_count": Relacion.objects.filter(character=character).count()
+        })
 
 class RegistroUsuarioView(CreateView):
     template_name = "registration/registro.html"

@@ -1,9 +1,16 @@
 from character import views
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from character.views import CharacterViewSet, RelacionViewSet
+
+router = DefaultRouter()
+router.register(r'characters', CharacterViewSet)
+router.register(r'relacions', RelacionViewSet)
 
 app_name = 'character'
 urlpatterns = [
     path('', views.StartGameView.as_view(), name='start_game'),
+    path('api/', include(router.urls)),
     path('register/', views.RegistroUsuarioView.as_view(), name='register'),
     path('principal_menu/', views.PrincipalMenuView.as_view(), name='principal_menu'),
     path('delete_character/<int:pk>/', views.DeleteCharacterView.as_view(),name='delete_character'),
