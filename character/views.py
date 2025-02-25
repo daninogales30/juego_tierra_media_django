@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, UpdateView, CreateView, ListView,
 from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
 
-class RegistroUsuarioView(LoginRequiredMixin, CreateView):
+class RegistroUsuarioView(CreateView):
     template_name = "registration/registro.html"
     form_class = UserCreationForm
     success_url = reverse_lazy("character:start_game")
