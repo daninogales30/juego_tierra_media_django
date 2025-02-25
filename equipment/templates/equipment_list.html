@@ -22,8 +22,8 @@
     <tbody>
     {% for equipment in equipments %}
         <tr>
-            <td>{{ equipment.name }}</td>
-            <td>{{ equipment.tipo }}</td>
+            <td>{{ equipment.name|capfirst }}</td>
+            <td>{{ equipment.tipo|capfirst }}</td>
             <td>{{ equipment.potencia }}</td>
             <td>
                 <img src="{% static 'images/' %}{{ equipment.name }}.png" alt="{{ equipment.name }}"
