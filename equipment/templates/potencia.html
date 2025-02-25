@@ -8,20 +8,34 @@
     <link rel="stylesheet" type="text/css" href="{% static 'potencia.css' %}">
 </head>
 <body>
-<h1>Lista de armas con más potencia</h1>
-<ul>
-    {% for weapon in weapons %}
-        <li>
-            <strong>{{ weapon.name }}</strong> -
-            Tipo: {{ weapon.tipo }},
-            Potencia: {{ weapon.potencia }},
-            Alcance: {{ weapon.alcance }}
-        </li>
-    {% empty %}
-        <li>No hay armas disponibles.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
-<a href="{% url 'equipment:equipment_list' %}">Volver a listas de armas</a>
+    <h1>Lista de armas con más potencia</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Potencia</th>
+                <th>Alcance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for weapon in weapons %}
+                <tr>
+                    <td>{{ weapon.name|capfirst }}</td>
+                    <td>{{ weapon.tipo|capfirst }}</td>
+                    <td>{{ weapon.potencia }}</td>
+                    <td>{{ weapon.alcance }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hay armas disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
+    <a href="{% url 'equipment:equipment_list' %}">Volver a listas de armas</a>
 </body>
 </html>
