@@ -13,4 +13,6 @@ urlpatterns = [
     path('change_ubication/<int:pk>/', views.ChangeUbicationView.as_view(), name='change_ubication'),
     path('character_list/', views.CharacterListView.as_view(), name='character_list'),
     path('relacion_create/', views.RelacionCreateView.as_view(), name="relacion_create"),
+    path('humanos_list/', views.HumanosView.as_view(), name="humanos_list"),
+    path('humanos_sin_armas/', views.HumanosSinArmaView.as_view(), name="humanos_sin_armas"),
 ]

@@ -102,3 +102,22 @@ class CharacterListView(LoginRequiredMixin, ListView):
     model = Character
     template_name = "character_list.html"
     context_object_name = "characters"
+
+class HumanosView(ListView):
+    model = Character
+    template_name = 'humanos_list.html'
+    context_object_name = 'humanos'
+
+    def get_queryset(self):
+        return Character.objects.filter(race='humana')
+
+class HumanosSinArmaView(ListView):
+    model = Character
+    template_name = 'humanos_sin_arma.html'
+    context_object_name = 'humanos'
+
+    def get_queryset(self):
+        return Character.objects.filter(
+            race='humana',
+            arma_equipada__isnull=True
+        ).order_by('name')
