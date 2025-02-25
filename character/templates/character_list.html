@@ -1,13 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
    <meta charset="UTF-8">
    <title>Listado de personajes</title>
-   <link rel="stylesheet" href="../static/character_list.css">
+   <link rel="stylesheet" href="{% static 'character_list.css' %}">
 </head>
 <body>
 <h1>Listado de personajes</h1>
 
+<div>
+    <h2>Busca personajes por nombre</h2>
+    <input type="text" id="search-character">
+</div>
 
 <table>
    <thead>
@@ -21,7 +26,7 @@
        {% endif %}
    </tr>
    </thead>
-   <tbody>
+   <tbody id="characters-body">
    {% for character in characters %}
        <tr>
            <td>{{ character.name }}</td>
@@ -50,5 +55,6 @@
     <a href="{% url 'character:humanos_list'  %}">Lista de humanos</a>
     <a href="{% url 'character:humanos_sin_armas' %}">Lista de humanos sin arma equipada</a>
    <a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
+<script src="{% static 'js/search.js' %}"></script>
 </body>
 </html>
