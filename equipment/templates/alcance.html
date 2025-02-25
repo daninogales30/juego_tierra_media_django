@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Armas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'alcance.css' %}">
+</head>
+<body>
+    <h1>Lista de armas con más alcance</h1>
+    <ul>
+        {% for weapon in weapons %}
+            <li>
+                <strong>{{ weapon.name }}</strong> -
+                Potencia: {{ weapon.potencia }},
+                Alcance: {{ weapon.weapon.alcance }}
+            </li>
+        {% empty %}
+            <li>No hay armas disponibles.</li>
+        {% endfor %}
+    </ul>
+<a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
+<a href="{% url 'equipment:equipment_list' %}">Volver a listas de armas</a>
+</body>
+</html>

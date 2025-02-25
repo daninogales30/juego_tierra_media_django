@@ -1,9 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, FormView, UpdateView
+from django.views.generic import  FormView
 from django.urls import reverse_lazy
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from equipment.forms import AssignEquipmentForm
-from equipment.models import Equipment
+
+from django.views.generic import ListView
+from django.db.models import Q
+from .models import Equipment, Weapon
 
 
 class EquipmentListView(LoginRequiredMixin, ListView, FormView):
@@ -32,3 +35,19 @@ class AssignEquipmentView(LoginRequiredMixin, FormView):
 
         return super().form_valid(form)
 
+class PotenciaView(ListView):
+    model = Weapon
+    template_name = 'potencia.html'
+    context_object_name = 'weapons'
+
+    def get_queryset(self):
+        return Weapon.objects.filter(potencia__gt=30).order_by('alcance')
+
+class AlcanceView(ListView):
+    model = Equipment
+    template_name = 'alcance.html'
+    context_object_name = 'weapons'
+
+    def get_queryset(self):
+        query = Q(weapon__isnull=False, weapon__alcance__gt=5)
+        return Equipment.objects.filter(query).order_by('name')
