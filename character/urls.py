@@ -24,6 +24,7 @@ urlpatterns = [
         path('', api_root, name='api-root'),
         path('', include(router.urls))
     ])),
+    path('character_stats/<int:pk>/', views.CharacterStatsView.as_view(), name='character_stats'),
     path('register/', views.RegistroUsuarioView.as_view(), name='register'),
     path('principal_menu/', views.PrincipalMenuView.as_view(), name='principal_menu'),
     path('delete_character/<int:pk>/', views.DeleteCharacterView.as_view(),name='delete_character'),

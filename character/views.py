@@ -1,3 +1,5 @@
+from django.shortcuts import render
+
 from character.forms import CharacterForm, RelacionForm
 from character.models import Character, Relacion
 from django.contrib.auth.forms import UserCreationForm
@@ -31,6 +33,16 @@ class CharacterViewSet(viewsets.ModelViewSet):
             "current_weapon_power": character.arma_equipada.potencia if character.arma_equipada else 0,
             "relationships_count": Relacion.objects.filter(character=character).count()
         })
+
+
+class CharacterStatsView(TemplateView):
+    template_name = 'character_stats.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['character_id'] = self.kwargs['pk']
+        return context
+
 
 class RegistroUsuarioView(CreateView):
     template_name = "registration/registro.html"

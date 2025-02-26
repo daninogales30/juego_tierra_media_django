@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estadísticas del Personaje</title>
+    <link rel="stylesheet" href="{% static 'character_detail.css' %}">
+</head>
+<body>
+<div>
+    <h1>Estadísticas del Personaje ID: {{ character_id }}</h1>
+        <p>Equipamiento total: <span id="total-equipment">Cargando...</span></p>
+        <p>Poder del arma actual: <span id="current-weapon-power">Cargando...</span></p>
+        <p>Relaciones: <span id="relationships-count">Cargando...</span></p>
+</div>
+
+<a href="{% url 'character:character_list' %}">Lista de personajes</a>
+<a href="{% url 'character:principal_menu' %}">Volver al menú inicial</a>
+
+
+<script>
+    const characterId = {{ character_id }};
+
+    // La ruta correcta incluye el prefijo 'api/'
+    fetch(`/api/characters/${characterId}/stats/`)  // 👈 Agregar 'api/' aquí
+        .then(response => {
+            if (!response.ok) throw new Error('Error HTTP: ' + response.status);
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('total-equipment').textContent = data.total_equipment;
+            document.getElementById('current-weapon-power').textContent = data.current_weapon_power; // Corregí typo en "weapon"
+            document.getElementById('relationships-count').textContent = data.relationships_count;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('stats').innerHTML = '<p>Error cargando datos</p>';
+        });
+</script>
+</body>
+</html>
