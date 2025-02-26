@@ -3,8 +3,19 @@
 ## Descripción del proyecto
 Este proyecto es una implementación del Juego Tierra Media utilizando 
 Django, un framework de Python de alto nivel especializado en el 
-desarrollo web, API REST y dockerizandola con Docker. La aplicación permite gestionar diferentes aspectos 
+desarrollo web, API REST y dockerizandola con Docker. El permite gestionar diferentes aspectos 
 del juego mediante una interfaz web.
+
+El juego tiene 3 aplicaciones: `Battle`, `Character` y `Equipment`.
+
+Cada aplicación tiene distintas funcionalidades relacionadas al nombre de la aplicación:
+* La aplicación `Battle`
+* La aplicación `Character` te permite crear personajes, gestionarlos y ver los detalles de cada uno. Puedes 
+ver el listado de personajes, filtrarlos para ver cuales son de la raza humana, cuales tienen armas, etc.
+* La aplicación `Equipment`
+
+El juego te permite crear personajes, gestionarlos y ver los detalles de cada uno, añadir armas al inventario de estos personajes, equiparles las armas, 
+iniciar relaciones entre ellos y hacerlos combatir en batallas.
 
 ## Estructura del Proyecto
 Para comprender bien el funcionamiento del proyecto, una de las cosas que hay que 
