@@ -26,6 +26,22 @@ class BattleView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
         batalla = Battle.objects.create(character1=jugador1, character2=jugador2)
-        batalla.simulate()
-        print("holaa")
-        return render(self.request, 'battleview.html', {'form': form, 'ganador': batalla.winner})
+        try:
+            batalla.simulate()
+        except Exception as e:
+            form.add_error(None, str(e))
+            return self.form_invalid(form)
+
+        jugador1.refresh_from_db()
+        jugador2.refresh_from_db()
+
+        # Convertir el log en lista para el template
+        battle_log = batalla.battle_log.split("\n") if batalla.battle_log else []
+
+        return render(self.request, 'battleview.html', {
+            'form': form,
+            'battle': batalla,
+            'character1': jugador1,
+            'character2': jugador2,
+            'battle_log': battle_log,
+        })

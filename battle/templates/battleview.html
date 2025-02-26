@@ -1,64 +1,202 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Batalla</title>
+    <title>Batalla Épica</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-primary: #c41e3a;
+            --color-secondary: #1e90ff;
+        }
+
+        body {
+            font-family: Iceberg, cursive;
+            background: url('../static/images/batalla.webp');
+            color: white;
+            text-align: center;
+        }
+
+        .battle-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        .combatants {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+
+        .combatant {
+            position: relative;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .combatant.active {
+            transform: scale(1.1);
+            border: 2px solid gold;
+        }
+
         .health-bar {
             width: 300px;
-            height: 20px;
-            background-color: #eee;
-            margin: 10px 0;
-            border-radius: 10px;
+            height: 25px;
+            background: #444;
+            border-radius: 12px;
             overflow: hidden;
+            position: relative;
+            margin: 10px 0;
         }
+
         .health-fill {
             height: 100%;
-            background-color: #4CAF50;
-            transition: width 0.3s ease;
+            background: linear-gradient(to right, #4CAF50, #45a049);
+            transition: width 1s ease;
         }
+
+        .critical-effect {
+            position: absolute;
+            animation: criticalFlash 0.5s;
+        }
+
+        @keyframes attackAnimation {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes criticalFlash {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(3); }
+        }
+
+        #battleLog {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            animation: logEntry 0.5s;
+        }
+
         .critical {
-            color: red;
+            color: #ffd700;
             font-weight: bold;
         }
+
+        #winnerAnnouncement {
+            font-size: 2em;
+            color: gold;
+            text-shadow: 2px 2px 4px black;
+            animation: winnerAnimation 2s;
+        }
+
+        @keyframes winnerAnimation {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
     </style>
-    <link rel="stylesheet" href="{% static 'battleview.css' %}">
 </head>
 <body>
-    <h1>Simular Batalla</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Pelear!</button>
-    </form>
+    <div class="battle-container">
+        <h1>⚔️ Batalla Épica ⚔️</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="padding: 10px 20px; font-size: 1.2em; background: var(--color-primary); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                ¡Iniciar Batalla!
+            </button>
+        </form>
 
-    {% if battle %}
-    <h2>Resultado:</h2>
-    <div class="combatants">
-        <div class="combatant">
-            <h3>{{ character1.name }}</h3>
-            <div class="health-bar">
-                <div class="health-fill"
-                     style="width: {% widthratio character1.health character1.get_max_health 100 %}%;">
+        {% if battle %}
+        <div class="combatants">
+            <div class="combatant" id="combatant1">
+                <h2>{{ character1.name }}</h2>
+                <div class="health-bar">
+                    <div class="health-fill" id="health1"></div>
                 </div>
+                <p>HP: <span id="currentHealth1">{{ character1.health }}</span>/{{ character1.get_max_health }}</p>
             </div>
-            <p>Salud: {{ character1.health }}/{{ character1.get_max_health }}</p>
+
+            <div class="combatant" id="combatant2">
+                <h2>{{ character2.name }}</h2>
+                <div class="health-bar">
+                    <div class="health-fill" id="health2"></div>
+                </div>
+                <p>HP: <span id="currentHealth2">{{ character2.health }}</span>/{{ character2.get_max_health }}</p>
+            </div>
         </div>
 
-        <div class="combatant">
-            <h3>{{ character2.name }}</h3>
-            <div class="health-bar">
-                <div class="health-fill"
-                     style="width: {% widthratio character2.health character2.get_max_health 100 %}%;">
-                </div>
-            </div>
-            <p>Salud: {{ character2.health }}/{{ character2.get_max_health }}</p>
+        <div id="battleLog">
+            {% for entry in battle_log %}
+                <div class="log-entry {% if 'CRÍTICO' in entry %}critical{% endif %}">{{ entry }}</div>
+            {% endfor %}
         </div>
 
-        <h3 class="{% if winner %}critical{% endif %}">
-            Ganador: {{ battle.winner.name }}
-        </h3>
+        {% if battle.winner %}
+        <div id="winnerAnnouncement">
+            🏆 ¡VICTORIA DE {{ battle.winner.name|upper }}! 🏆
+        </div>
+        {% endif %}
+        {% endif %}
     </div>
-    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            {% if battle %}
+                // Animación de barras de salud
+                const animateHealthBars = () => {
+                    const health1 = document.getElementById('health1');
+                    const health2 = document.getElementById('health2');
+                    const maxHealth1 = {{ character1.get_max_health }};
+                    const maxHealth2 = {{ character2.get_max_health }};
+
+                    health1.style.width = `${({{ character1.health }} / maxHealth1) * 100}%`;
+                    health2.style.width = `${({{ character2.health }} / maxHealth2) * 100}%`;
+                };
+
+                // Efectos de ataque
+                const logEntries = document.querySelectorAll('.log-entry');
+                let delay = 0;
+
+                logEntries.forEach(entry => {
+                    setTimeout(() => {
+                        entry.classList.add('visible');
+                        if (entry.classList.contains('critical')) {
+                            const combatants = document.querySelector('.combatants');
+                            const criticalEffect = document.createElement('div');
+                            criticalEffect.className = 'critical-effect';
+                            criticalEffect.textContent = '💥 CRÍTICO!';
+                            combatants.appendChild(criticalEffect);
+                            setTimeout(() => criticalEffect.remove(), 500);
+                        }
+                    }, delay);
+                    delay += 1000; // 1 segundo entre cada entrada
+                });
+
+                // Inicializar animaciones
+                animateHealthBars();
+
+                // Efecto de sonido (necesitarías agregar archivos de sonido)
+                const playSound = (type) => {
+                    const audio = new Audio(type === 'critical' ? '/sounds/critical.mp3' : '/sounds/attack.mp3');
+                    audio.play();
+                };
+            {% endif %}
+        });
+    </script>
 </body>
 </html>
