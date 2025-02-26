@@ -1,27 +1,64 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Batalla</title>
+    <style>
+        .health-bar {
+            width: 300px;
+            height: 20px;
+            background-color: #eee;
+            margin: 10px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .health-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+        .critical {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
     <link rel="stylesheet" href="{% static 'battleview.css' %}">
 </head>
 <body>
     <h1>Simular Batalla</h1>
-    <div>
-        <form method="post" id="battleForm">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">¡¡FIGHT!!</button>
-        </form>
-    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Pelear!</button>
+    </form>
 
-    {% if ganador %}
-    <div id="winnerContainer" style="position: relative;">
-        <h2>El ganador es... {{ ganador.name }}</h2>
-        <img src="../static/images/14Um.gif" alt="">
+    {% if battle %}
+    <h2>Resultado:</h2>
+    <div class="combatants">
+        <div class="combatant">
+            <h3>{{ character1.name }}</h3>
+            <div class="health-bar">
+                <div class="health-fill"
+                     style="width: {% widthratio character1.health character1.get_max_health 100 %}%;">
+                </div>
+            </div>
+            <p>Salud: {{ character1.health }}/{{ character1.get_max_health }}</p>
+        </div>
+
+        <div class="combatant">
+            <h3>{{ character2.name }}</h3>
+            <div class="health-bar">
+                <div class="health-fill"
+                     style="width: {% widthratio character2.health character2.get_max_health 100 %}%;">
+                </div>
+            </div>
+            <p>Salud: {{ character2.health }}/{{ character2.get_max_health }}</p>
+        </div>
+
+        <h3 class="{% if winner %}critical{% endif %}">
+            Ganador: {{ battle.winner.name }}
+        </h3>
     </div>
     {% endif %}
-    <a href="{% url 'character:principal_menu'%}">Volver al menú principal</a>
 </body>
 </html>
