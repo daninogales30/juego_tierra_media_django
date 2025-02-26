@@ -36,12 +36,11 @@ class BattleView(LoginRequiredMixin, FormView):
         jugador2.refresh_from_db()
 
         # Convertir el log en lista para el template
-        battle_log = batalla.battle_log.split("\n") if batalla.battle_log else []
 
         return render(self.request, 'battleview.html', {
             'form': form,
             'battle': batalla,
             'character1': jugador1,
             'character2': jugador2,
-            'battle_log': battle_log,
+            'loser': batalla.loser
         })

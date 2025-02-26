@@ -9,25 +9,117 @@
             --color-secondary: #1e90ff;
         }
 
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             font-family: Iceberg, cursive;
             background: url('../static/images/batalla.webp');
             color: white;
             text-align: center;
         }
 
+        .winner-banner {
+            font-size: 3em;
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            animation: blurReveal 2s forwards;
+            filter: blur(15px);
+            opacity: 0;
+        }
+
+        @keyframes blurReveal {
+            0% { filter: blur(15px); opacity: 0; }
+            100% { filter: blur(0); opacity: 1; }
+        }
+
+        .fighter-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--color-primary);
+            z-index: 1000;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .celebration-effect {
+            position: fixed;
+            pointer-events: none;
+            animation: floatUp 3s forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .post-battle-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .battle-button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+
+        .battle-button.secondary {
+            background: #2c3e50;
+        }
+
+        .battle-button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
         .battle-container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 20px auto;
+            padding: 30px;
             background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
+            border-radius: 15px;
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 0 30px rgba(0,0,0,0.4);
         }
 
         .combatants {
+            margin-top: 20px;
             display: flex;
             justify-content: space-around;
-            margin: 30px 0;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .combatant {
@@ -35,22 +127,19 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .combatant.active {
-            transform: scale(1.1);
-            border: 2px solid gold;
+            border: 2px solid var(--color-primary);
+            flex: 1;
+            min-width: 250px;
         }
 
         .health-bar {
-            width: 300px;
+            width: 100%;
             height: 25px;
             background: #444;
             border-radius: 12px;
             overflow: hidden;
-            position: relative;
             margin: 10px 0;
+            position: relative;
         }
 
         .health-fill {
@@ -59,143 +148,161 @@
             transition: width 1s ease;
         }
 
-        .critical-effect {
+        .quote-icon {
+            font-size: 1.5em;
+            color: var(--color-primary);
+            vertical-align: middle;
+        }
+
+        .modal-close {
             position: absolute;
-            animation: criticalFlash 0.5s;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
         }
 
-        @keyframes attackAnimation {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(20px); }
-            100% { transform: translateX(0); }
-        }
+        @media (max-width: 768px) {
+            .battle-container {
+                margin: 10px;
+                padding: 20px;
+            }
 
-        @keyframes criticalFlash {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(3); }
-        }
-
-        #battleLog {
-            height: 200px;
-            overflow-y: auto;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 5px;
-            text-align: left;
-        }
-
-        .log-entry {
-            margin: 5px 0;
-            padding: 5px;
-            animation: logEntry 0.5s;
-        }
-
-        .critical {
-            color: #ffd700;
-            font-weight: bold;
-        }
-
-        #winnerAnnouncement {
-            font-size: 2em;
-            color: gold;
-            text-shadow: 2px 2px 4px black;
-            animation: winnerAnimation 2s;
-        }
-
-        @keyframes winnerAnimation {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+            .battle-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="battle-container">
-        <h1>⚔️ Batalla Épica ⚔️</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" style="padding: 10px 20px; font-size: 1.2em; background: var(--color-primary); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                ¡Iniciar Batalla!
-            </button>
-        </form>
+<div class="battle-container">
+    <h1>⚔️ Batalla Épica ⚔️</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="battle-button">
+            ¡Iniciar Batalla!
+        </button>
+    </form>
 
-        {% if battle %}
+    {% if battle %}
         <div class="combatants">
-            <div class="combatant" id="combatant1">
+            <div class="combatant">
                 <h2>{{ character1.name }}</h2>
                 <div class="health-bar">
-                    <div class="health-fill" id="health1"></div>
+                    <div class="health-fill" style="width: {% widthratio character1.health character1.get_max_health 100 %}%;"></div>
                 </div>
-                <p>HP: <span id="currentHealth1">{{ character1.health }}</span>/{{ character1.get_max_health }}</p>
+                <p>HP: {{ character1.health }}/{{ character1.get_max_health }}</p>
             </div>
 
-            <div class="combatant" id="combatant2">
+            <div class="combatant">
                 <h2>{{ character2.name }}</h2>
                 <div class="health-bar">
-                    <div class="health-fill" id="health2"></div>
+                    <div class="health-fill" style="width: {% widthratio character2.health character2.get_max_health 100 %}%;"></div>
                 </div>
-                <p>HP: <span id="currentHealth2">{{ character2.health }}</span>/{{ character2.get_max_health }}</p>
+                <p>HP: {{ character2.health }}/{{ character2.get_max_health }}</p>
             </div>
-        </div>
-
-        <div id="battleLog">
-            {% for entry in battle_log %}
-                <div class="log-entry {% if 'CRÍTICO' in entry %}critical{% endif %}">{{ entry }}</div>
-            {% endfor %}
         </div>
 
         {% if battle.winner %}
-        <div id="winnerAnnouncement">
-            🏆 ¡VICTORIA DE {{ battle.winner.name|upper }}! 🏆
-        </div>
+            <div class="winner-banner" id="winnerBanner">
+                🏆 ¡VICTORIA DE {{ battle.winner.name|upper }}! 🏆
+            </div>
+
+            <div class="post-battle-buttons">
+                <button class="battle-button secondary" onclick="window.history.back()">Volver atrás</button>
+                <button class="battle-button" onclick="toggleModal('winnerTestimony')">Testimonio ganador</button>
+                <button class="battle-button" onclick="toggleModal('loserTestimony')">Testimonio perdedor</button>
+                <button class="battle-button" onclick="toggleModal('fighterDetails1')">Detalles {{ character1.name }}</button>
+                <button class="battle-button" onclick="toggleModal('fighterDetails2')">Detalles {{ character2.name }}</button>
+                <button class="battle-button" onclick="startCelebration()">🎉 Celebrar victoria!</button>
+            </div>
+
+            <!-- Modales -->
+            <div id="winnerTestimony" class="fighter-modal">
+                <button class="modal-close" onclick="toggleModal('winnerTestimony')">&times;</button>
+                <p>
+                    <span class="quote-icon">❝</span>
+                    <strong>{{ battle.winner.name|upper }}:</strong>
+                    ¡Muchas gracias a todos por vuestro apoyo en esta batalla épica!
+                    Esta victoria pertenece a todos los que creyeron en mí. ¡Seguiré luchando con honor!
+                    <span class="quote-icon">❞</span>
+                </p>
+            </div>
+
+            <div id="loserTestimony" class="fighter-modal">
+                <button class="modal-close" onclick="toggleModal('loserTestimony')">&times;</button>
+                <p>
+                    <span class="quote-icon">❝</span>
+                    <strong>{{ battle.loser.name|upper }}:</strong>
+                    ¡Esta derrota es solo un contratiempo! Volveré más fuerte y mejor preparado.
+                    La próxima vez será diferente, ¡lo prometo!
+                    <span class="quote-icon">❞</span>
+                </p>
+            </div>
+
+            <div id="fighterDetails1" class="fighter-modal">
+                <button class="modal-close" onclick="toggleModal('fighterDetails1')">&times;</button>
+                <h3>{{ character1.name }}</h3>
+                <p>🏹 Raza: {{ character1.race }}</p>
+                <p>⚔️ Facción: {{ character1.faction }}</p>
+                <p>🛡️ Arma: {{ character1.arma_equipada.name|capfirst }}</p>
+                <p>💥 Poder: {{ character1.get_power }}</p>
+            </div>
+
+            <div id="fighterDetails2" class="fighter-modal">
+                <button class="modal-close" onclick="toggleModal('fighterDetails2')">&times;</button>
+                <h3>{{ character2.name }}</h3>
+                <p>🏹 Raza: {{ character2.race }}</p>
+                <p>⚔️ Facción: {{ character2.faction }}</p>
+                <p>🛡️ Arma: {{ character2.arma_equipada.name|capfirst }}</p>
+                <p>💥 Poder: {{ character2.get_power }}</p>
+            </div>
         {% endif %}
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            {% if battle %}
-                // Animación de barras de salud
-                const animateHealthBars = () => {
-                    const health1 = document.getElementById('health1');
-                    const health2 = document.getElementById('health2');
-                    const maxHealth1 = {{ character1.get_max_health }};
-                    const maxHealth2 = {{ character2.get_max_health }};
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('winnerBanner');
+        if(banner) {
+            setTimeout(() => {
+                banner.style.animation = 'blurReveal 2s forwards';
+            }, 500);
+        }
+    });
 
-                    health1.style.width = `${({{ character1.health }} / maxHealth1) * 100}%`;
-                    health2.style.width = `${({{ character2.health }} / maxHealth2) * 100}%`;
-                };
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
 
-                // Efectos de ataque
-                const logEntries = document.querySelectorAll('.log-entry');
-                let delay = 0;
+        // Cerrar al hacer clic fuera
+        if(modal.style.display === 'block') {
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        }
+    }
 
-                logEntries.forEach(entry => {
-                    setTimeout(() => {
-                        entry.classList.add('visible');
-                        if (entry.classList.contains('critical')) {
-                            const combatants = document.querySelector('.combatants');
-                            const criticalEffect = document.createElement('div');
-                            criticalEffect.className = 'critical-effect';
-                            criticalEffect.textContent = '💥 CRÍTICO!';
-                            combatants.appendChild(criticalEffect);
-                            setTimeout(() => criticalEffect.remove(), 500);
-                        }
-                    }, delay);
-                    delay += 1000; // 1 segundo entre cada entrada
-                });
+    function startCelebration() {
+        const emojis = ['🎉', '🎊', '🥳', '💥', '✨', '🔥', '🌟'];
+        for(let i = 0; i < 50; i++) {
+            const effect = document.createElement('div');
+            effect.className = 'celebration-effect';
+            effect.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            effect.style.left = `${Math.random() * 100}%`;
+            effect.style.fontSize = `${Math.random() * 2 + 1}rem`;
+            effect.style.animationDelay = `${Math.random() * 1}s`;
+            document.body.appendChild(effect);
 
-                // Inicializar animaciones
-                animateHealthBars();
-
-                // Efecto de sonido (necesitarías agregar archivos de sonido)
-                const playSound = (type) => {
-                    const audio = new Audio(type === 'critical' ? '/sounds/critical.mp3' : '/sounds/attack.mp3');
-                    audio.play();
-                };
-            {% endif %}
-        });
-    </script>
+            setTimeout(() => effect.remove(), 3000);
+        }
+    }
+</script>
 </body>
 </html>
