@@ -16,15 +16,47 @@
 <div class="battle-container">
     <h1 class="glowing-text">⚔️ Batalla Épica ⚔️</h1>
 
-    <form method="post" id="battleForm">
-        {% csrf_token %}
-        <div class="character-select">
-            {{ form.character1 }}
-            <div class="vs">VS</div>
-            {{ form.character2 }}
-        </div>
-        <button type="submit" class="fight-button">INICIAR BATALLA</button>
-    </form>
+    <form method="post" id="battleForm" class="battle-form">
+            {% csrf_token %}
+
+            <div class="form-content">
+                <div class="character-selectors">
+                    <div class="character-select">
+                        <label class="selector-label">Luchador 1</label>
+                        {{ form.character1 }}
+                    </div>
+
+                    <div class="vs-container">
+                        <div class="vs-divider"></div>
+                        <div class="vs-text">VS</div>
+                        <div class="vs-divider"></div>
+                    </div>
+
+                    <div class="character-select">
+                        <label class="selector-label">Luchador 2</label>
+                        {{ form.character2 }}
+                    </div>
+                </div>
+
+                {% if form.errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="error-message">{{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <button type="submit" class="fight-button">
+                    <span class="button-text">INICIAR BATALLA</span>
+                    <span class="button-fire">🔥</span>
+                </button>
+            </div>
+        </form>
 
     {% if battle %}
     <div id="battleAnimation">

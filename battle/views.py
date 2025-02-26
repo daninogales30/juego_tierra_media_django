@@ -10,14 +10,14 @@ class BattleView(LoginRequiredMixin, FormView):
     template_name = 'battleview.html'
 
     def form_valid(self, form):
-        char1 = form.cleaned_data['character1']
-        char2 = form.cleaned_data['character2']
+        character1 = form.cleaned_data['character1']
+        character2 = form.cleaned_data['character2']
 
-        if char1 == char2:
+        if character2 == character1:
             form.add_error(None, "¡No puedes pelear contigo mismo!")
             return self.form_invalid(form)
 
-        battle = Battle.objects.create(character1=char1, character2=char2)
+        battle = Battle.objects.create(character1=character1, character2=character2)
         battle.simulate_battle()
 
         context = self.get_context_data()
