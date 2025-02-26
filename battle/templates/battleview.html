@@ -208,6 +208,11 @@
         </div>
 
         {% if battle.winner %}
+            <div class="suerte-mensaje">
+        <p>{{ request.session.mensaje_suerte }}</p>
+        <small>Suerte actual: x{{ request.session.modificador_suerte|floatformat:2 }}</small>
+    </div>
+
             <div class="winner-banner" id="winnerBanner">
                 🙌 ¡VICTORIA DE {{ battle.winner.name|upper }}! 🙌
             </div>

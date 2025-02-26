@@ -54,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'character.middlewares.LuckyPlayerMiddleware',
 ]
 
 ROOT_URLCONF = 'juego_tierra_media_django.urls'
