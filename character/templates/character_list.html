@@ -2,9 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <title>Listado de personajes</title>
-   <link rel="stylesheet" href="{% static 'character_list.css' %}">
+    <meta charset="UTF-8">
+    <title>Listado de personajes</title>
+    <link rel="stylesheet" href="{% static 'character_list.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" rel="stylesheet">
 </head>
 <body>
 <h1>Listado de personajes</h1>
@@ -15,52 +18,53 @@
 </div>
 
 <table>
-   <thead>
-   <tr>
-       <th>Nombre</th>
-       <th>Raza</th>
-       <th>Ubicación</th>
-       <th>Equipamiento</th>
-       <th>Arma Equipada</th>
-       {% if characters %}
-       <th>Acciones</th>
-       {% endif %}
-   </tr>
-   </thead>
-   <tbody id="characters-body">
-   {% for character in characters %}
-       <tr>
-           <td>{{ character.name }}</td>
-           <td>{{ character.get_race_display }}</td>
-           <td>{{ character.ubication|capfirst }}</td>
-           <td>
-               {% for equipo in character.equipment.all %}
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Raza</th>
+        <th>Ubicación</th>
+        <th>Equipamiento</th>
+        <th>Arma Equipada</th>
+        {% if characters %}
+            <th>Acciones</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody id="characters-body">
+    {% for character in characters %}
+        <tr>
+            <td>{{ character.name }}</td>
+            <td>{{ character.get_race_display }}</td>
+            <td>{{ character.ubication|capfirst }}</td>
+            <td>
+                {% for equipo in character.equipment.all %}
                     {{ equipo.name|capfirst }}{% if not forloop.last %}, {% endif %}
-               {% endfor %}
-           </td>
-           <td>{{ character.arma_equipada|default:"Sin arma"|capfirst }}</td>
-           <td>
-               <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a>
-               <a href="{% url 'character:equip_weapon' character.id %}">Equipar Arma</a>
-               <a href="{% url 'character:detail_character' character.id %}">Ver Detalles</a>
-               <a href="{% url 'character:delete_character' character.id %}">Eliminar personaje</a>
-           </td>
-       </tr>
-   {% empty %}
-       <tr>
-           <td colspan="6">No hay personajes disponibles. <a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a></td>
-       </tr>
-   {% endfor %}
-   </tbody>
+                {% endfor %}
+            </td>
+            <td>{{ character.arma_equipada|default:"Sin arma"|capfirst }}</td>
+            <td>
+                <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a>
+                <a href="{% url 'character:equip_weapon' character.id %}">Equipar Arma</a>
+                <a href="{% url 'character:detail_character' character.id %}">Ver Detalles</a>
+                <a href="{% url 'character:delete_character' character.id %}">Eliminar personaje</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="6">No hay personajes disponibles. <a href="{% url 'character:create_character' %}">Crear Nuevo
+                Personaje</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 {% if characters %}
-   <a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a>
-   <a href="{% url 'character:relacion_create' %}">Crear relación entre 2 personajes</a>
+    <a href="{% url 'character:create_character' %}">Crear Nuevo Personaje</a>
+    <a href="{% url 'character:relacion_create' %}">Crear relación entre 2 personajes</a>
     <a href="{% url 'equipment:assign_equipment' %}">Asignar equipamiento a un personaje</a>
 {% endif %}
-    <a href="{% url 'character:humanos_list'  %}">Lista de humanos</a>
-    <a href="{% url 'character:humanos_sin_armas' %}">Lista de humanos sin arma equipada</a>
-   <a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
+<a href="{% url 'character:humanos_list' %}">Lista de humanos</a>
+<a href="{% url 'character:humanos_sin_armas' %}">Lista de humanos sin arma equipada</a>
+<a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
 <script src="{% static 'js/search.js' %}"></script>
 </body>
 </html>

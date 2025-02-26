@@ -1,3 +1,10 @@
+.iceberg-regular {
+  font-family: "Iceberg", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 * {
     padding: 0;
     margin: 0;
@@ -5,7 +12,7 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: Iceberg, sans-serif;
     color: white;
     background-image: url("images/fondo.webp");
     background-size: cover;
@@ -71,12 +78,14 @@ button {
     border: none;
     border-radius: 7px;
     cursor: pointer;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
 }
 
 button:hover {
     background-color: rgba(126, 69, 82, 0.8);
     color: #cfcfcf;
+    transform: scale(1.2);
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
 }
 
 a{
@@ -86,13 +95,13 @@ a{
     padding: 8px 12px;
     border-radius: 7px;
     background-color: rgba(73, 36, 45, 0.62);
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
 }
 
 a:hover{
     cursor: pointer;
     color: #cfcfcf;
     background-color: rgba(126, 69, 82, 0.62);
-    transition: background-color 0.35s ease, color 0.35s ease;
-
+    transform: scale(1.2);
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
 }

@@ -5,26 +5,29 @@
     <meta charset="UTF-8">
     <title>Asignar Equipo</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assign_equipment.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Iceberg&display=swap');
+    </style>
 </head>
 <body>
-    <h2>Asignar Equipamiento a un Personaje</h2>
-    
-    <form method="post">
-        {% csrf_token %}
-        <table border="1">
-            <tr>
-                <th>Selecciona un personaje</th>
-                <td>{{ form.character }}</td>
-            </tr>
-            <tr>
-                <th>Selecciona un equipo</th>
-                <td>{{ form.equipment }}</td>
-            </tr>
-        </table>
-        <button type="submit">Asignar</button>
-    </form>
+<h2>Asignar Equipamiento a un Personaje</h2>
 
-    <a href="{% url 'equipment:equipment_list'%}">Volver a la lista de equipamientos</a>
-    <a href="{% url 'character:principal_menu'%}">Volver al menú principal</a>
+<form method="post">
+    {% csrf_token %}
+    <table border="1">
+        <tr>
+            <th>Selecciona un personaje</th>
+            <td>{{ form.character }}</td>
+        </tr>
+        <tr>
+            <th>Selecciona un equipo</th>
+            <td>{{ form.equipment }}</td>
+        </tr>
+    </table>
+    <button type="submit">Asignar</button>
+</form>
+
+<a href="{% url 'equipment:equipment_list' %}">Volver a la lista de equipamientos</a>
+<a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
 </body>
 </html>

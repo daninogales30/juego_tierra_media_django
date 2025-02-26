@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <title>Página principal</title>
     <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <a href="{% url 'character:create_character' %}">Crear personaje</a>
-        <a href="{% url 'character:character_list' %}">Lista de personajes</a>
-        <a href="{% url 'equipment:equipment_list' %}">Lista de armas</a>
-        <a href="{% url 'character:api-root' %}">Acceder a la api</a>
-        <a href="{% url 'battle:simulate' %}">Batalla</a>
-    </div>
+<div>
+    <a href="{% url 'character:create_character' %}">Crear personaje</a>
+    <a href="{% url 'character:character_list' %}">Lista de personajes</a>
+    <a href="{% url 'equipment:equipment_list' %}">Lista de armas</a>
+    <a href="{% url 'character:api-root' %}">Acceder a la api</a>
+    <a href="{% url 'battle:simulate' %}">Batalla</a>
+</div>
 </body>
 </html>

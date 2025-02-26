@@ -6,36 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Humanos sin Arma Equipada</title>
     <link rel="stylesheet" href="{% static 'humanos_sin_arma.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Humanos sin Arma Equipada</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Facción</th>
-                <th>Ubicación</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for humano in humanos %}
-                <tr>
-                    <td>{{ humano.name }}</td>
-                    <td>{{ humano.faction }}</td>
-                    <td>{{ humano.ubication }}</td>
-                    <td>
-                        <a href="{% url 'character:equip_weapon' humano.id %}" class="btn-añadir">Equipar Arma</a>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">No hay humanos sin arma equipada.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="/" class="back-link">Volver al Inicio</a>
-    <a href="{% url 'character:character_list' %}" class="back-link">Volver a lista de personajes</a>
+<h1>Humanos sin Arma Equipada</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Facción</th>
+        <th>Ubicación</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for humano in humanos %}
+        <tr>
+            <td>{{ humano.name }}</td>
+            <td>{{ humano.faction }}</td>
+            <td>{{ humano.ubication }}</td>
+            <td>
+                <a href="{% url 'character:equip_weapon' humano.id %}" class="btn-añadir">Equipar Arma</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4">No hay humanos sin arma equipada.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="/" class="back-link">Volver al Inicio</a>
+<a href="{% url 'character:character_list' %}" class="back-link">Volver a lista de personajes</a>
 </body>
 </html>

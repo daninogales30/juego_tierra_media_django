@@ -4,8 +4,15 @@
     box-sizing: border-box;
 }
 
+.iceberg-regular {
+  font-family: "Iceberg", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 body {
-   font-family: sans-serif;
+   font-family: Iceberg, sans-serif;
    color: white;
     background-image: url("images/fondo.webp");
     background-size: cover;
@@ -62,7 +69,7 @@ a {
     padding: 10px 15px;
     border-radius: 7px;
     background-color: rgba(73, 36, 45, 0.8);
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
     text-align: center;
     display: inline-block;
     margin: 5px;
@@ -71,4 +78,6 @@ a {
 a:hover {
     background-color: rgba(126, 69, 82, 0.8);
     color: #cfcfcf;
+    transform: scale(1.2);
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
 }

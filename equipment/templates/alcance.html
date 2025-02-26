@@ -6,36 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Armas</title>
     <link rel="stylesheet" type="text/css" href="{% static 'alcance.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Iceberg&display=swap');
+    </style>
 </head>
 <body>
-    <h1>Lista de armas con más alcance</h1>
+<h1>Lista de armas con más alcance</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Potencia</th>
-                <th>Alcance</th>
-                <th>Imagen</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for weapon in weapons %}
-                <tr>
-                    <td>{{ weapon.name|capfirst }}</td>
-                    <td>{{ weapon.potencia }}</td>
-                    <td>{{ weapon.weapon.alcance }}</td>
-                <td><img src="{% static 'images/' %}{{ weapon.name }}.png" alt="{{ weapon.name }}" width="100px"></td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="3">No hay armas disponibles.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Potencia</th>
+        <th>Alcance</th>
+        <th>Imagen</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for weapon in weapons %}
+        <tr>
+            <td>{{ weapon.name|capfirst }}</td>
+            <td>{{ weapon.potencia }}</td>
+            <td>{{ weapon.weapon.alcance }}</td>
+            <td><img src="{% static 'images/' %}{{ weapon.name }}.png" alt="{{ weapon.name }}" width="100px"></td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="3">No hay armas disponibles.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-    <a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
-    <a href="{% url 'equipment:equipment_list' %}">Volver a listas de armas</a>
+<a href="{% url 'character:principal_menu' %}">Volver al menú principal</a>
+<a href="{% url 'equipment:equipment_list' %}">Volver a listas de armas</a>
 </body>
 </html>

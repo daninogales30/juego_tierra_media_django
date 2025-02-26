@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <link rel="stylesheet" href="../static/relacion_form.css">
-   <title>Crear relación</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/relacion_form.css">
+    <title>Crear relación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceberg&display=swap" rel="stylesheet">
 </head>
 <body>
 <div>
-   <h1>Crear relación</h1>
-   <form method="post">
-       {% csrf_token %}
-       {{ form.as_p }}
-       <button type="submit">Crear relación</button>
-   </form>
+    <h1>Crear relación</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear relación</button>
+    </form>
 </div>
 <div>
     <a href="{% url 'character:character_list' %}">Lista de personajes</a>
