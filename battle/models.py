@@ -62,12 +62,10 @@ class Battle(models.Model):
         self.save()
 
     def calculate_damage(self, attacker, stamina, base_crit):
-        suerte = self.request.session.get('modificador_suerte', 1.0)
-
         base_damage = attacker.arma_equipada.potencia
         crit_multiplier = 2.5
 
-        crit_chance = base_crit * suerte + ((100 - stamina) / 100 * 0.15)
+        crit_chance = base_crit + ((100 - stamina) / 100 * 0.15)
 
         is_critical = random.random() < crit_chance
 
