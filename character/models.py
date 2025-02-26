@@ -8,10 +8,10 @@ class Character(models.Model):
     ubication = models.CharField(max_length=100)
     equipment = models.ManyToManyField(Equipment, blank=False, related_name='equipamiento' )
     arma_equipada = models.ForeignKey(Equipment, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada')
-    health = models.IntegerField(default=100)  # Nuevo campo
+    health = models.IntegerField(default=500)
 
     def get_max_health(self):
-        base_health = 100
+        base_health = 500
         return base_health
 
     def add_equipment(self, new_equipment):
