@@ -20,6 +20,7 @@
        <th>Nombre</th>
        <th>Raza</th>
        <th>Ubicación</th>
+       <th>Equipamiento</th>
        <th>Arma Equipada</th>
        {% if characters %}
        <th>Acciones</th>
@@ -32,6 +33,11 @@
            <td>{{ character.name }}</td>
            <td>{{ character.get_race_display }}</td>
            <td>{{ character.ubication|capfirst }}</td>
+           <td>
+               {% for equipo in character.equipment.all %}
+                    {{ equipo.name|capfirst }}{% if not forloop.last %}, {% endif %}
+               {% endfor %}
+           </td>
            <td>{{ character.arma_equipada|default:"Sin arma"|capfirst }}</td>
            <td>
                <a href="{% url 'character:change_ubication' character.id %}">Cambiar Ubicación</a>

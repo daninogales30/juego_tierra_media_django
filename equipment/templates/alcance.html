@@ -16,6 +16,7 @@
                 <th>Nombre</th>
                 <th>Potencia</th>
                 <th>Alcance</th>
+                <th>Imagen</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                     <td>{{ weapon.name|capfirst }}</td>
                     <td>{{ weapon.potencia }}</td>
                     <td>{{ weapon.weapon.alcance }}</td>
+                <td><img src="{% static 'images/' %}{{ weapon.name }}.png" alt="{{ weapon.name }}" width="100px"></td>
                 </tr>
             {% empty %}
                 <tr>

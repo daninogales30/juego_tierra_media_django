@@ -21,12 +21,12 @@
         <tbody>
             {% for humano in humanos %}
                 <tr>
-                    <td>{{ humano.name }}</td>
-                    <td>{{ humano.faction }}</td>
-                    <td>{{ humano.ubication }}</td>
+                    <td>{{ humano.name|capfirst }}</td>
+                    <td>{{ humano.faction|capfirst }}</td>
+                    <td>{{ humano.ubication|capfirst }}</td>
                     <td>
                         {% for equipo in humano.equipment.all %}
-                            {{ equipo.name }}{% if not forloop.last %}, {% endif %}
+                            {{ equipo.name|capfirst }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </td>
                 </tr>
