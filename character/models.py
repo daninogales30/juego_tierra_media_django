@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 from django.db import models
 from equipment.models import Equipment, Weapon
 
@@ -8,7 +10,7 @@ class Character(models.Model):
     ubication = models.CharField(max_length=100)
     equipment = models.ManyToManyField(Equipment, blank=False, related_name='equipamiento' )
     arma_equipada = models.ForeignKey(Equipment, null=True, blank=True, on_delete=models.SET_NULL, related_name='arma_equipada')
-    health = models.IntegerField(default=500)
+    health = models.IntegerField(default=500, null=True, blank=True)
 
     def get_max_health(self):
         base_health = 500
