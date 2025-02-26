@@ -43,6 +43,24 @@ table {
     margin-bottom: 20px;
 }
 
+a {
+    margin-top: 15px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 7px;
+    background-color: rgba(73, 36, 45, 0.62);
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+
+a:hover {
+    color: #cfcfcf;
+    background-color: rgba(126, 69, 82, 0.62);
+    transform: scale(1.2);
+    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+
 th, td {
     padding: 15px;
     text-align: center;
@@ -61,20 +79,4 @@ tr:hover {
     background: rgba(140, 70, 75, 0.7);
 }
 
-.back-link {
-    margin-top: 15px;
-    font-size: 18px;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 7px;
-    background-color: rgba(73, 36, 45, 0.62);
-    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
-}
 
-.back-link:hover {
-    color: #cfcfcf;
-    background-color: rgba(126, 69, 82, 0.62);
-    transform: scale(1.2);
-    transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
-}
