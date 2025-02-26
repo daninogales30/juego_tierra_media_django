@@ -1,4 +1,6 @@
 import random
+from email.errors import CloseBoundaryNotFoundDefect
+
 from django.db import models
 
 from character.models import Character
@@ -10,13 +12,12 @@ class Battle(models.Model):
     winner = models.ForeignKey(Character,null=True, blank=True, on_delete=models.SET_NULL, related_name='ganador_batalla' )
     date = models.DateTimeField(auto_now_add=True)
     loser = models.ForeignKey(Character, null=True, blank=True, on_delete=models.SET_NULL,
-                              related_name='perdedor_batalla')  # Nuevo campo
+                              related_name='perdedor_batalla')
 
     def simulate(self):
         if not self.character1.arma_equipada or not self.character2.arma_equipada:
             raise ValueError("¡Ambos necesitan armas!")
 
-        # Configurar atributos iniciales
         vida_max1 = self.character1.get_max_health()
         vida_max2 = self.character2.get_max_health()
         vida_actual1 = vida_max1
@@ -29,16 +30,13 @@ class Battle(models.Model):
         critico = 0.10
 
         while vida_actual1 > 0 and vida_actual2 > 0:
-            damage, is_critical = self.calculate_damage(self.character1, stamina1, critico)
-            current_health2 = max(vida_actual2 - damage, 0)
-            stamina1 = max(stamina1 - 15, 0)
-
-            if current_health2 <= 0:
+            damage, _ = self.calculate_damage(self.character1, stamina1, critico)
+            vida_actual2 = max(vida_actual2 - damage, 0)
+            if vida_actual2 <= 0:
                 break
 
-
-            damage, is_critical = self.calculate_damage(self.character2, stamina2, critico)
-            current_health1 = max(vida_actual1 - damage, 0)
+            damage, _ = self.calculate_damage(self.character2, stamina2, critico)
+            vida_actual1 = max(vida_actual1 - damage, 0)
             stamina2 = max(stamina2 - 15, 0)
 
             numero_ronda += 1
@@ -48,15 +46,20 @@ class Battle(models.Model):
         if vida_actual1 > 0:
             winner = self.character1
             loser = self.character2
-        else:
+        elif vida_actual2 > 0:
             winner = self.character2
             loser = self.character1
+        else:
+            winner = random.choice([self.character1, self.character2])
+            loser = self.character2 if winner == self.character1 else self.character1
 
         self.winner = winner
         self.loser = loser
-        self.save()
+        winner.health = max(int(0.3 * winner.get_max_health()), 1)
+        loser.health = 0
         winner.save()
         loser.save()
+        self.save()
 
 
     def calculate_damage(self, attacker, stamina, base_crit):
@@ -68,7 +71,7 @@ class Battle(models.Model):
         is_critical = random.random() < crit_chance
 
 
-        damage = base_damage * (0.8 + random.random() * 0.4)  # Variación 80-120%
+        damage = base_damage * (0.8 + random.random() * 0.4)
         if is_critical:
             damage *= crit_multiplier
 

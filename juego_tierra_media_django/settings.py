@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'character.middlewares.LuckyPlayerMiddleware',
 ]
 
 ROOT_URLCONF = 'juego_tierra_media_django.urls'
@@ -142,3 +143,9 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/"
+
+ADMINS = [
+    ('Dani', 'danielnogalesmateos2005@gmail.com'),
+]
+
+SERVER_EMAIL = 'notificaciones@dominio.com'

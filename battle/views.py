@@ -32,8 +32,7 @@ class BattleView(LoginRequiredMixin, FormView):
             form.add_error(None, str(e))
             return self.form_invalid(form)
 
-        jugador1.refresh_from_db()
-        jugador2.refresh_from_db()
+
 
         # Convertir el log en lista para el template
 
