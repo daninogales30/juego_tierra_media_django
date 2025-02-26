@@ -214,11 +214,11 @@
     </div>
 
             <div class="winner-banner" id="winnerBanner">
-                🙌 ¡VICTORIA DE {{ battle.winner.name|upper }}! 🙌
+                ¡VICTORIA DE {{ battle.winner.name|upper }}!
             </div>
 
             <div class="post-battle-buttons">
-                <button class="battle-button secondary" onclick="window.history.back()">Volver atrás</button>
+                <a href="{% url 'character:principal_menu' %}"></a>
                 <button class="battle-button" onclick="toggleModal('winnerTestimony')">Testimonio ganador</button>
                 <button class="battle-button" onclick="toggleModal('loserTestimony')">Testimonio perdedor</button>
                 <button class="battle-button" onclick="toggleModal('fighterDetails1')">Detalles {{ character1.name }}</button>
@@ -252,19 +252,19 @@
             <div id="fighterDetails1" class="fighter-modal">
                 <button class="modal-close" onclick="toggleModal('fighterDetails1')">&times;</button>
                 <h3>{{ character1.name }}</h3>
-                <p>🏹 Raza: {{ character1.race }}</p>
-                <p>⚔️ Facción: {{ character1.faction }}</p>
-                <p>🛡️ Arma: {{ character1.arma_equipada.name|capfirst }}</p>
-                <p>💥 Poder: {{ character1.get_power }}</p>
+                <p>Raza: {{ character1.race }}</p>
+                <p>Facción: {{ character1.faction }}</p>
+                <p>Arma: {{ character1.arma_equipada.name|capfirst }}</p>
+                <p>Poder: {{ character1.get_power }}</p>
             </div>
 
             <div id="fighterDetails2" class="fighter-modal">
                 <button class="modal-close" onclick="toggleModal('fighterDetails2')">&times;</button>
                 <h3>{{ character2.name }}</h3>
-                <p>🏹 Raza: {{ character2.race }}</p>
-                <p>⚔️ Facción: {{ character2.faction }}</p>
-                <p>🛡️ Arma: {{ character2.arma_equipada.name|capfirst }}</p>
-                <p>💥 Poder: {{ character2.get_power }}</p>
+                <p>Raza: {{ character2.race }}</p>
+                <p>Facción: {{ character2.faction }}</p>
+                <p>Arma: {{ character2.arma_equipada.name|capfirst }}</p>
+                <p>Poder: {{ character2.get_power }}</p>
             </div>
         {% endif %}
     {% endif %}
@@ -284,7 +284,6 @@
         const modal = document.getElementById(modalId);
         modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
 
-        // Cerrar al hacer clic fuera
         if(modal.style.display === 'block') {
             window.onclick = function(event) {
                 if (event.target === modal) {

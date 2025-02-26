@@ -33,9 +33,6 @@ class BattleView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-
-        # Convertir el log en lista para el template
-
         return render(self.request, 'battleview.html', {
             'form': form,
             'battle': batalla,

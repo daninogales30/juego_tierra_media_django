@@ -67,7 +67,6 @@ class Battle(models.Model):
         base_damage = attacker.arma_equipada.potencia
         crit_multiplier = 2.5
 
-        # Aplicar suerte a la probabilidad crítica
         crit_chance = base_crit * suerte + ((100 - stamina) / 100 * 0.15)
 
         is_critical = random.random() < crit_chance
