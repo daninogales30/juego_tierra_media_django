@@ -4,6 +4,7 @@ from equipment.models import Equipment, Weapon
 class Character(models.Model):
     name = models.CharField(max_length=50, unique=True)
     race = models.CharField(max_length=50, choices=[('elfo', 'Elfo'), ('humana', 'Humana'), ('Enano', 'Enano'), ('Hobbit', 'Hobbit')])
+    health = models.IntegerField(default=100)
     faction = models.CharField(max_length=100)
     ubication = models.CharField(max_length=100)
     equipment = models.ManyToManyField(Equipment, blank=False, related_name='equipamiento' )

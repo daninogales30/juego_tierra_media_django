@@ -1,135 +1,110 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Batalla</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <link rel="stylesheet" href="{% static 'battleview.css' %}">
-    <style>
-@keyframes confeti-fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
-}
-
-#winnerContainer {
-    position: relative;
-    padding: 20px;
-    background: rgba(0,0,0,0.9);
-    border-radius: 10px;
-    margin: 20px auto;
-    width: fit-content;
-    color: white;
-    text-align: center;
-}
-</style>
 </head>
 <body>
-    <h1>Simular Batalla</h1>
-    <div>
-        <form method="post" id="battleForm">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">¡¡FIGHT!!</button>
-        </form>
+
+
+
+<div class="battle-container">
+    <h1 class="glowing-text">⚔️ Batalla Épica ⚔️</h1>
+
+    <form method="post" id="battleForm">
+        {% csrf_token %}
+        <div class="character-select">
+            {{ form.character1 }}
+            <div class="vs">VS</div>
+            {{ form.character2 }}
+        </div>
+        <button type="submit" class="fight-button">INICIAR BATALLA</button>
+    </form>
+
+    {% if battle %}
+    <div id="battleAnimation">
+        <img src="{% static 'images/warrior.png' %}" class="fighter" id="fighter1" style="left: 20%;" alt="img1">
+        <img src="{% static 'images/mage.png' %}" class="fighter" id="fighter2" style="right: 20%;" alt="img2">
     </div>
 
-    {% if ganador %}
-    <div id="winnerContainer" style="position: relative;">
-        <h2>El ganador es... {{ ganador.name }}</h2>
-        <img src="../static/images/14Um.gif" alt="">
+    <div class="health-bars">
+        <div class="combatant">
+            <h3>{{ battle.character1.name }}</h3>
+            <div class="health-bar">
+                <div class="health-fill" style="width: {% widthratio battle.character1.health 100 100 %}%;"></div>
+            </div>
+        </div>
+        <div class="combatant">
+            <h3>{{ battle.character2.name }}</h3>
+            <div class="health-bar">
+                <div class="health-fill" style="width: {% widthratio battle.character2.health 100 100 %}%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="battleLog">
+        {% for event in history %}
+        <div class="attack-log {{ event.type }} {% if event.result == 'critical' %}critical{% endif %} {% if event.result == 'evasion' %}evasion{% endif %}">
+            <span class="log-icon">
+                {% if event.type == 'melee' %}⚔️{% endif %}
+                {% if event.type == 'ranged' %}🏹{% endif %}
+                {% if event.type == 'magic' %}🔥{% endif %}
+            </span>
+            {{ event.attacker }} atacó a {{ event.defender }} con
+            {% if event.result == 'critical' %}🔥 CRÍTICO! {% endif %}
+            {% if event.result == 'evasion' %}💨 EVASIÓN! {% endif %}
+            {% if event.damage > 0 %}(-{{ event.damage }} HP){% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="winnerAnnouncement" class="winner-container">
+        <h2 class="winner-text">🏆 VICTORIA DE {{ battle.winner.name|upper }} 🏆</h2>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
     </div>
     {% endif %}
-    <a href="{% url 'character:principal_menu'%}">Volver al menú principal</a>
+</div>
 
-    <script>
-        function createConfettiFromElement(element) {
-    const rect = element.getBoundingClientRect();
-    const colors = ['#ff0000', '#ffd700', '#00ff00', '#ff00ff', '#00ffff', '#ffffff'];
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const animateAttack = (attackerId) => {
+        const attacker = document.getElementById(attackerId);
+        attacker.classList.add('attack-animation');
+        setTimeout(() => attacker.classList.remove('attack-animation'), 500);
+    };
 
-    // Crear 100 partículas de confeti
-    for(let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.cssText = `
-            position: fixed;
-            width: ${Math.random() * 4 + 2}px;
-            height: ${Math.random() * 4 + 2}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-            left: ${rect.left + Math.random() * rect.width}px;
-            top: ${rect.top + Math.random() * rect.height}px;
-            pointer-events: none;
-            z-index: 9999;
-            transform-origin: center;
-            animation: confeti-fall ${Math.random() * 2 + 1.5}s ease-out forwards;
-        `;
+    const logEntries = document.querySelectorAll('.attack-log');
+    logEntries.forEach((entry, index) => {
+        setTimeout(() => {
+            entry.scrollIntoView({ behavior: 'smooth' });
+            const attackerId = entry.textContent.includes('{{ battle.character1.name }}') ? 'fighter1' : 'fighter2';
+            animateAttack(attackerId);
 
-        document.body.appendChild(confetti);
-
-        // Animación personalizada
-        const startTime = Date.now();
-        const animate = () => {
-            const timePassed = Date.now() - startTime;
-            const progress = timePassed / 1500;
-
-            confetti.style.transform = `
-                translate(
-                    ${Math.sin(progress * 10) * 50}px,
-                    ${progress * window.innerHeight}px
-                )
-                rotate(${progress * 360}deg)
-            `;
-
-            confetti.style.opacity = 1 - (progress * 1.2);
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                confetti.remove();
-            }
-        };
-
-        requestAnimationFrame(animate);
-    }
-}
-
-// En el evento submit del formulario
-document.getElementById('battleForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-
-    fetch("{% url 'battle:simulate' %}", {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        }
-    })
-    .then(response => response.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const winnerDiv = doc.getElementById('winnerContainer');
-
-        if(winnerDiv) {
-            const existingWinner = document.getElementById('winnerContainer');
-            if(existingWinner) existingWinner.remove();
-
-            const newWinner = document.body.insertBefore(
-                winnerDiv,
-                document.querySelector('a')
-            );
-
-            // Esperar a que el div esté en el DOM
-            setTimeout(() => createConfettiFromElement(newWinner), 50);
-        }
+            // Actualizar barras de salud
+            const healthBars = document.querySelectorAll('.health-fill');
+            healthBars[0].style.width = `${entry.dataset.health1}%`;
+            healthBars[1].style.width = `${entry.dataset.health2}%`;
+        }, index * 600);
     });
 });
-    </script>
+
+// Efectos de confeti
+const confettiCount = 100;
+for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.animationDelay = Math.random() * 3 + 's';
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}deg, 100%, 50%)`;
+    document.querySelector('.winner-container').appendChild(confetti);
+}
+</script>
 </body>
 </html>
