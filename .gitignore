@@ -1,8 +1,0 @@
-.idea/
-battle/__pychache__/
-character/__pychache__/
-equipment/__pychache__/
-battle/migrations/__pychache__/
-character/migrations/__pychache__/
-equipment/migrations/__pychache__/
-.gitignore
