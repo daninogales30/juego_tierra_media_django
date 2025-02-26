@@ -1,142 +1,27 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Batalla</title>
     <link rel="stylesheet" href="{% static 'battleview.css' %}">
 </head>
 <body>
-
-
-
-<div class="battle-container">
-    <h1 class="glowing-text">⚔️ Batalla Épica ⚔️</h1>
-
-    <form method="post" id="battleForm" class="battle-form">
+    <h1>Simular Batalla</h1>
+    <div>
+        <form method="post" id="battleForm">
             {% csrf_token %}
-
-            <div class="form-content">
-                <div class="character-selectors">
-                    <div class="character-select">
-                        <label class="selector-label">Luchador 1</label>
-                        {{ form.character1 }}
-                    </div>
-
-                    <div class="vs-container">
-                        <div class="vs-divider"></div>
-                        <div class="vs-text">VS</div>
-                        <div class="vs-divider"></div>
-                    </div>
-
-                    <div class="character-select">
-                        <label class="selector-label">Luchador 2</label>
-                        {{ form.character2 }}
-                    </div>
-                </div>
-
-                {% if form.errors %}
-                <div class="form-errors">
-                    {% for error in form.non_field_errors %}
-                        <div class="error-message">{{ error }}</div>
-                    {% endfor %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <div class="error-message">{{ error }}</div>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <button type="submit" class="fight-button">
-                    <span class="button-text">INICIAR BATALLA</span>
-                    <span class="button-fire">🔥</span>
-                </button>
-            </div>
+            {{ form.as_p }}
+            <button type="submit">¡¡FIGHT!!</button>
         </form>
-
-    {% if battle %}
-    <div id="battleAnimation">
-        <img src="{% static 'images/warrior.png' %}" class="fighter" id="fighter1" style="left: 20%;" alt="img1">
-        <img src="{% static 'images/mage.png' %}" class="fighter" id="fighter2" style="right: 20%;" alt="img2">
     </div>
 
-    <div class="health-bars">
-        <div class="combatant">
-            <h3>{{ battle.character1.name }}</h3>
-            <div class="health-bar">
-                <div class="health-fill" style="width: {% widthratio battle.character1.health 100 100 %}%;"></div>
-            </div>
-        </div>
-        <div class="combatant">
-            <h3>{{ battle.character2.name }}</h3>
-            <div class="health-bar">
-                <div class="health-fill" style="width: {% widthratio battle.character2.health 100 100 %}%;"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="battleLog">
-        {% for event in history %}
-        <div class="attack-log {{ event.type }} {% if event.result == 'critical' %}critical{% endif %} {% if event.result == 'evasion' %}evasion{% endif %}">
-            <span class="log-icon">
-                {% if event.type == 'melee' %}⚔️{% endif %}
-                {% if event.type == 'ranged' %}🏹{% endif %}
-                {% if event.type == 'magic' %}🔥{% endif %}
-            </span>
-            {{ event.attacker }} atacó a {{ event.defender }} con
-            {% if event.result == 'critical' %}🔥 CRÍTICO! {% endif %}
-            {% if event.result == 'evasion' %}💨 EVASIÓN! {% endif %}
-            {% if event.damage > 0 %}(-{{ event.damage }} HP){% endif %}
-        </div>
-        {% endfor %}
-    </div>
-
-    <div id="winnerAnnouncement" class="winner-container">
-        <h2 class="winner-text">🏆 VICTORIA DE {{ battle.winner.name|upper }} 🏆</h2>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
+    {% if ganador %}
+    <div id="winnerContainer" style="position: relative;">
+        <h2>El ganador es... {{ ganador.name }}</h2>
+        <img src="../static/images/14Um.gif" alt="">
     </div>
     {% endif %}
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const animateAttack = (attackerId) => {
-        const attacker = document.getElementById(attackerId);
-        attacker.classList.add('attack-animation');
-        setTimeout(() => attacker.classList.remove('attack-animation'), 500);
-    };
-
-    const logEntries = document.querySelectorAll('.attack-log');
-    logEntries.forEach((entry, index) => {
-        setTimeout(() => {
-            entry.scrollIntoView({ behavior: 'smooth' });
-            const attackerId = entry.textContent.includes('{{ battle.character1.name }}') ? 'fighter1' : 'fighter2';
-            animateAttack(attackerId);
-
-            // Actualizar barras de salud
-            const healthBars = document.querySelectorAll('.health-fill');
-            healthBars[0].style.width = `${entry.dataset.health1}%`;
-            healthBars[1].style.width = `${entry.dataset.health2}%`;
-        }, index * 600);
-    });
-});
-
-// Efectos de confeti
-const confettiCount = 100;
-for (let i = 0; i < confettiCount; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.animationDelay = Math.random() * 3 + 's';
-    confetti.style.backgroundColor = `hsl(${Math.random() * 360}deg, 100%, 50%)`;
-    document.querySelector('.winner-container').appendChild(confetti);
-}
-</script>
+    <a href="{% url 'character:principal_menu'%}">Volver al menú principal</a>
 </body>
 </html>

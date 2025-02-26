@@ -1,26 +1,31 @@
-from django.views.generic import FormView
-from django.http import JsonResponse
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Battle
-from .forms import BattleForm
+from django.shortcuts import render
+from django.views.generic import FormView
+
+from battle.forms import BattleForm
+from battle.models import Battle
 
 
+
+# Create your views here.
 class BattleView(LoginRequiredMixin, FormView):
     form_class = BattleForm
     template_name = 'battleview.html'
 
     def form_valid(self, form):
-        character1 = form.cleaned_data['character1']
-        character2 = form.cleaned_data['character2']
+        jugador1 = form.cleaned_data['jugador1']
+        jugador2 = form.cleaned_data['jugador2']
 
-        if character2 == character1:
-            form.add_error(None, "¡No puedes pelear contigo mismo!")
+        if jugador1 == jugador2:
+            form.add_error("jugador1", "No se puede pelear con el mismo personaje")
             return self.form_invalid(form)
 
-        battle = Battle.objects.create(character1=character1, character2=character2)
-        battle.simulate_battle()
+        if not jugador1.arma_equipada or not jugador2.arma_equipada:
+            form.add_error("jugador1", "Se necesita equipar un arma en ambos personajes")
+            return self.form_invalid(form)
 
-        context = self.get_context_data()
-        context['battle'] = battle
-        context['history'] = battle.battle_history
-        return self.render_to_response(context)
+        batalla = Battle.objects.create(character1=jugador1, character2=jugador2)
+        batalla.simulate()
+        print("holaa")
+        return render(self.request, 'battleview.html', {'form': form, 'ganador': batalla.winner})
